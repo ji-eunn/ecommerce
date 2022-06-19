@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.ecommerce.mapper.AdminMapper">
+
+    <insert id="insertCategory" parameterType= "CategoryDto"> <!-- alias 설정: application.yml > mybatis 설정에서 dto 경로 넣어주고, 나머지는 paraemterType 에 작성 -->
+        INSERT INTO CATEGORY (category_name) VALUES (#{categoryName})
+    </insert>
+    <!-- DB 에서 default 값이 있는 것들은 쿼리문에서 넣어주지 않아도 자동으로 들어감 -->
+    <!-- null 허용일 경우에도 넣어주지 않으면 자동으로 null 값 들어감 -->
+    <!-- html : 프론트엔지니어 / mapper : 백엔드엔지니어 -> 보통 작업이 각 동시에 이뤄지지만
+         본인이 풀스택이라면 html 먼저 만들어놓고, 이 name 이 맞춰서 mapper 에서의 #{} 을 작성해주면 됨 -->
+</mapper>

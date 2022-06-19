@@ -5,7 +5,10 @@ import com.project.ecommerce.mapper.MainMapper;
 import com.project.ecommerce.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -32,10 +35,9 @@ public class MainController {
 
     @RequestMapping(value = "/index3", method=GET)
     public String indexTwo() {
-        CategoryDto categoryDto = mainService.searchTwo();
+        CategoryDto categoryDto = mainService.searchTwo(); // 하나 입력하면 입력란 하나 더 생겨서 하나 더 입력하고 여러개 한꺼버네 추가할 수있게
         System.out.println(categoryDto.getCategoryKey());
         return "test.html";
     }
-
 
 }

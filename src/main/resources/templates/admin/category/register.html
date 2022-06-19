@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a category</title>
+</head>
+<body>
+<form action="/admin/category/register" method="post"> <!-- Controller 에서의 mapping 정보랑 동일할 경우 action 만 써주면되고, 다를 경우 action="" 에 써서 매칭해주면 됨 -->
+    <label>
+        <p class="label-txt"><b>카테고리명을 입력하세요.</b></p>
+        <input type="text" id="name" class="input" name="categoryName">
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+    </label>
+    <button type="submit">등록</button>
+    <!-- submit 하는 순간 <input>태그의 name 별로 서버로 전송 -->
+</form>
+</body>
+</html>

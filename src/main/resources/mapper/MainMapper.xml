@@ -6,7 +6,8 @@
 
     <resultMap id="a" type="com.project.ecommerce.dto.CategoryDto">
         <result column="=result_key" property="resultKey"></result>
-        <result column="=result_name" property="resultName"></result>
+        <result column="=r
+        esult_name" property="resultName"></result>
     </resultMap>
 
     <select id="selectCategory" resultType="com.project.ecommerce.dto.CategoryDto">
@@ -20,11 +21,5 @@
         FROM CATEGORY
         WHERE category_key = 2
     </select>
-
-    <insert parameterType="">
-
-    </insert>
-
-
 
 </mapper>

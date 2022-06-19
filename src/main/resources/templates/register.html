@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a category</title>
+</head>
+<body>
+<form th:action method="post" th:object="${category}"> <!-- th:object="${객체명}" 사용할 객체 지정 -->
+    <label>
+        <p class="label-txt"><b>카테고리명을 입력하세요.</b></p>
+        <input type="text" id="name" class="input" th:field="*{categoryName}"> <!-- th:field="*{속성명}" 선택된 객체에 대한 속성들 지정. th:field 를 사용할 시에 id,name,value 속성을 자동으로 생성해주기에 따로 명시할 필요가 없다.(field 값과 동일하게 생성) -->
+        <div class="line-box">
+            <div class="line"></div>
+        </div>
+    </label>
+    <button type="submit">등록</button>
+</form>
+</body>
+</html>
