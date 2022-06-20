@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category List</title>
+</head>
+<!-- Ctrl + F5 : 캐시지우면서 새로고침 -->
+<body>
+    <h2 class="label-txt"><b>카테고리 목록</b></h2>
+    <table>
+        <thead>
+            <tr> <!-- 부모태그(=상위태그) -->
+                <th>번호</th> <!-- 자식태그(=하위태그) -->
+                <th>카테고리명</th>
+                <th>삭제</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="list: ${category}" onmouseover="showTab()"> <!-- th:text="${list.categoryName}" == [[${list.categoryName}]] -->
+                <td><a th:href="/admin/category/detailPage/[[${list.categoryKey}]]">[[${list.categoryKey}]]</a></td>
+                <td th:text="${list.categoryName}" style="cursor: hand;"></td>
+                <td><button th:onclick="location.href='/admin/category/remove/[[${list.categoryKey}]]'">삭제</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <td><button >추가</button></td>
+    <!-- <p name="categoryName">[[${categoryName}]]</p> -->
+</form>
+</body>
+
+<script>
+    /* javascript 는 java 와 달리 타입이 없다(=리턴값이 없다) */
+
+    /*
+    * this 는 '자기 자신'을 의미
+    * 자바스크립트에서 this 가 굉장히 여러의미로 쓰이는데,
+    * 함수의 파라미터로 넣었을 때는 function 그 자체가 this 가 된다.
+    * */
+    function showTab() {
+        button.style.visibility = 'visible'
+    }
+
+
+</script>
+</html>

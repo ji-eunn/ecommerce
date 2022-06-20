@@ -4,10 +4,27 @@
 <mapper namespace="com.project.ecommerce.mapper.AdminMapper">
 
     <insert id="insertCategory" parameterType= "CategoryDto"> <!-- alias 설정: application.yml > mybatis 설정에서 dto 경로 넣어주고, 나머지는 paraemterType 에 작성 -->
-        INSERT INTO CATEGORY (category_name) VALUES (#{categoryName})
+        INSERT INTO CATEGORY (category_name, category_depth, upper_key)
+        VALUES (#{categoryName}, #{categoryDepth}, #{upperKey})
     </insert>
-    <!-- DB 에서 default 값이 있는 것들은 쿼리문에서 넣어주지 않아도 자동으로 들어감 -->
-    <!-- null 허용일 경우에도 넣어주지 않으면 자동으로 null 값 들어감 -->
-    <!-- html : 프론트엔지니어 / mapper : 백엔드엔지니어 -> 보통 작업이 각 동시에 이뤄지지만
-         본인이 풀스택이라면 html 먼저 만들어놓고, 이 name 이 맞춰서 mapper 에서의 #{} 을 작성해주면 됨 -->
+    <!-- DB 에서 default 값이 있는 것들은 쿼리문에서 넣어주지 않아도 자동으로 들어감
+    null 허용일 경우에도 넣어주지 않으면 자동으로 null 값 들어감
+    html : 프론트엔지니어 / mapper : 백엔드엔지니어 -> 보통 작업이 각 동시에 이뤄지지만
+         본인이 풀스택이라면 html 먼저 만들어놓고, 이 name 이 맞춰서 mapper 에서의 #{} 을 작성해주면 됨
+         즉, html -> mapper -> Controller -> service? -->
+
+    <!-- SELECT 할 때는 전체 조회(*) 보다는 컬럼을 직접 넣어주는 게 좋다.
+         DB가 수정되었는데 Dto 는 수정되지 않은 경우 등... 여러 에러 조건이 있을 수 있다 -->
+
+    <select id="selectCategory" resultType="CategoryDto">
+        SELECT CATEGORY_KEY, CATEGORY_NAME, CATEGORY_DEPTH, UPPER_KEY
+        FROM CATEGORY
+        WHERE DEL_FLAG = 0
+    </select>
+
+    <!-- select 빼고는 나머지 insert, update, delete 는 반환 로직이 딱히 없기 때문에 parameterType 사용 -->
+
+    <update id="deleteCategory" parameterType="CategoryDto">
+        UPDATE CATEGORY SET DEL_FLAG = 1 WHERE CATEGORY_KEY = #{categoryKey}
+    </update>
 </mapper>

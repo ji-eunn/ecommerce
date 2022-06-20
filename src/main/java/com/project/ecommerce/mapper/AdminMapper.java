@@ -2,6 +2,7 @@ package com.project.ecommerce.mapper;
 
 import com.project.ecommerce.dto.CategoryDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,6 +14,13 @@ import java.util.List;
 // 생성하지 않았을 경우 오류 발생
 public interface AdminMapper {
 
+
     void insertCategory(CategoryDto categoryDto);
 
+    List<CategoryDto> selectCategory();
+    /*
+    * 그냥 넣으면 MyBatis XML 에서 인지하지 못할 수 도 있으니, @Param 으로 정의해줘야 한다.
+    * BUT.  DTO 로 사용하면 정의해주지 않아도 잘 인지한다.
+    * */
+    List<CategoryDto> deleteCategory(@Param("categoryKey") Integer categoryKey);
 }
