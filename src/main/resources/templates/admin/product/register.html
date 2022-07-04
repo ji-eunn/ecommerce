@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register a product</title>
+</head>
+<body>
+<form action="/admin/product/register" method="post">
+<!--    <input id="productKey" type="hidden" th:value="${product.productKey}" />
+    <input id="regTime" type="hidden" th:value="${product.regTime}" />-->
+    <div>
+        <select id="category" name="category">
+            <option>Select a category</option>
+            <option th:each="list : ${category}"
+                    th:value="${list.categoryKey}"
+                    th:text="${list.categoryName}"></option>
+        </select>
+    </div>
+    <label for="productName">
+        <p class="label-txt"><b>Product Name</b></p>
+        <input type="text" id="productName" class="input" name="productName" size=40>
+    </label>
+    <label for="description">
+        <p class="label-txt"><b>Description</b></p>
+        <textarea id="description" class="input" name="description" cols=40 rows=10></textarea>
+    </label>
+    <label for="price">
+        <p class="label-txt"><b>Price</b></p>
+        <input type="text" id="price" class="input" name="price">
+    </label>
+    <label for="brand">
+        <p class="label-txt"><b>Brand</b></p>
+        <input type="text" id="brand" class="input" name="brand">
+    </label>
+    <label for="color">
+        <p class="label-txt"><b>Color</b></p>
+        <input type="text" id="color" class="input" name="color">
+    </label>
+    <label for="stock">
+        <p class="label-txt"><b>Stock</b></p>
+        <input type="text" id="stock" class="input" name="stock">
+    </label>
+<button type="submit">Register</button>
+</form>
+</body>
+</html>

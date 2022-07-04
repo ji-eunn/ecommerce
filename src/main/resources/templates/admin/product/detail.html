@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+</head>
+<body>
+
+<div>
+    <div>
+        <p class="label-txt"><b>productName</b></p>
+        <input th:value="${product.productName}" size=40 disabled>
+    </div>
+    <div>
+        <p class="label-txt"><b>Description</b></p>
+        <textarea th:value="${product.description}" th:text="${product.description}" cols=40 rows=10 disabled></textarea>
+    </div>
+    <div>
+        <p class="label-txt"><b>Price</b></p>
+        <input th:value="${product.price}" disabled>
+    </div>
+    <div>
+        <p class="label-txt"><b>Brand</b></p>
+        <input th:value="${product.brand}" disabled>
+    </div>
+    <div>
+        <p class="label-txt"><b>Color</b></p>
+        <input th:value="${product.color}" disabled>
+    </div>
+    <div>
+        <p class="label-txt"><b>Stock</b></p>
+        <input th:value="${product.stock}" disabled>
+    </div>
+</div>
+<div>
+    <button th:onclick="location.href='/admin/product/remove/[[${product.productKey}]]'">Delete</button>
+    <button th:onclick="location.href='/admin/product/editPage/[[${product.productKey}]]'">Edit</button>
+    <button th:onclick="'location.href=\''+ @{/admin/product/listPage} + '\''">List</button>
+</div>
+
+</body>
+</html>

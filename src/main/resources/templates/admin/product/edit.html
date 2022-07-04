@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+</head>
+<body>
+
+<form th:action="@{'/admin/product/edit/' + ${product.productKey}}" method="post">
+    <input type="hidden" th:value="${product.productKey}">
+    <div>
+        <div>
+            <p class="label-txt"><b>productName</b></p>
+            <input type="text" name="productName" th:value="${product.productName}" size=40>
+        </div>
+        <div>
+            <p class="label-txt"><b>Description</b></p>
+            <textarea type="text" name="description" th:value="${product.description}" th:text="${product.description}" cols=40 rows=10></textarea>
+        </div>
+        <div>
+            <p class="label-txt"><b>Price</b></p>
+            <input type="text" name="price" th:value="${product.price}">
+        </div>
+        <div>
+            <p class="label-txt"><b>Brand</b></p>
+            <input type="text" name="brand" th:value="${product.brand}">
+        </div>
+        <div>
+            <p class="label-txt"><b>Color</b></p>
+            <input type="text" name="color" th:value="${product.color}">
+        </div>
+        <div>
+            <p class="label-txt"><b>Stock</b></p>
+            <input type="text" name="stock" th:value="${product.stock}">
+        </div>
+    </div>
+    <div>
+        <button th:onclick="location.href='/admin/product/remove/[[${product.productKey}]]'">Delete</button>
+        <button type="submit">Edit</button>
+        <button th:onclick="'location.href=\''+ @{/admin/product/listPage} + '\''">List</button>
+    </div>
+</form>
+
+</body>
+</html>
