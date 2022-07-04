@@ -1,7 +1,7 @@
 package com.project.ecommerce.controller;
 
 import com.project.ecommerce.dto.CategoryDto;
-import com.project.ecommerce.service.AdminService;
+import com.project.ecommerce.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,7 @@ import java.util.List;
 public class AdminRestController {
 
     @Autowired
-    private AdminService adminService;
+    private CategoryService adminService;
 
     @GetMapping("/test")
     public List<CategoryDto> test() {
