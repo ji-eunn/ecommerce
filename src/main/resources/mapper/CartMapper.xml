@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.ecommerce.mapper.CartMapper">
+
+    <!-- 요즘에는 외래키를 잘 쓰지 않고, 쿼리로 연결해서 가져온다. 왜? 외래키로 인한 오류 발생 -->
+    <select id="selectAll" resultType="cartDto">
+        SELECT CART_KEY, PRD_NAME, QUANTITY, PRICE, MEMBER_KEY, DEL_FLAG, CREATE_TIME
+          FROM CART
+         WHERE DEL_FLAG = 0;
+    </select>
+
+    <insert id="insert" parameterType="cartDto">
+        INSERT INTO CART (PRD_NAME, QUANTITY, PRICE, MEMBER_KEY)
+        VALUES (#{prdName}, #{quantity}, #{price}, #{memberKey})
+    </insert>
+
+</mapper>
