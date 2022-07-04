@@ -21,6 +21,14 @@ public class MainController {
     @Autowired
     MainService mainService;
 
+
+
+    @GetMapping("/")
+    public String indexPage() {
+        return "cart.html";
+    }
+
+
     @GetMapping("/index2")
     public String index() {
         // category 테이블에 데이터가 하나만 존재 할 경우,
