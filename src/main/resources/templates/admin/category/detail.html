@@ -2,10 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Category Details</title>
 </head>
 <body>
 <!-- disabled로 분리 -->
-<input th:text="${category}">
+<h2 class="label-txt"><b>카테고리 상세</b></h2>
+
+<div>
+    <div>
+        <label>categoryName</label>
+        <input th:value="${category.categoryName}" disabled>
+    </div>
+    <div>
+        <label>categoryDepth</label>
+        <input th:value="${category.categoryDepth}" disabled>
+    </div>
+    <div>
+        <label>upperKey</label>
+        <input th:value="${category.upperKey}" disabled>
+    </div>
+</div>
+<div>
+    <button th:onclick="location.href='/admin/category/remove/[[${category.categoryKey}]]'">삭제</button>
+    <button th:onclick="location.href='/admin/category/editPage/[[${category.categoryKey}]]'">수정</button>
+    <button th:onclick="'location.href=\''+ @{/admin/category/listPage} + '\''">목록</button>
+</div>
 </body>
 </html>

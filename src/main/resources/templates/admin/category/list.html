@@ -17,13 +17,13 @@
         </thead>
         <tbody>
             <tr th:each="list: ${category}" onmouseover="showTab()"> <!-- th:text="${list.categoryName}" == [[${list.categoryName}]] -->
-                <td><a th:href="/admin/category/detailPage/[[${list.categoryKey}]]">[[${list.categoryKey}]]</a></td>
-                <td th:text="${list.categoryName}" style="cursor: hand;"></td>
+                <td th:text="${list.categoryKey}"></td>
+                <td><a th:href="'/admin/category/detailPage/'+${list.categoryKey}" th:text="${list.categoryName}"></a></td>
                 <td><button th:onclick="location.href='/admin/category/remove/[[${list.categoryKey}]]'">삭제</button></td>
             </tr>
         </tbody>
     </table>
-    <td><button >추가</button></td>
+    <button th:onclick="'location.href=\''+ @{/admin/category/registerPage} + '\''">추가</button>
     <!-- <p name="categoryName">[[${categoryName}]]</p> -->
 </form>
 </body>
@@ -33,7 +33,7 @@
 
     /*
     * this 는 '자기 자신'을 의미
-    * 자바스크립트에서 this 가 굉장히 여러의미로 쓰이는데,
+/     * 자바스크립트에서 this 가 굉장히 여러의미로 쓰이는데,
     * 함수의 파라미터로 넣었을 때는 function 그 자체가 this 가 된다.
     * */
     function showTab() {
