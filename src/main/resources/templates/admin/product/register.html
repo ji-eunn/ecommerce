@@ -9,12 +9,13 @@
 <!--    <input id="productKey" type="hidden" th:value="${product.productKey}" />
     <input id="regTime" type="hidden" th:value="${product.regTime}" />-->
     <div>
-        <select id="category" name="category">
+        <select id="category" name="category" onchange="loadSiblings()">
             <option>Select a category</option>
             <option th:each="list : ${category}"
                     th:value="${list.categoryKey}"
                     th:text="${list.categoryName}"></option>
         </select>
+
     </div>
     <label for="productName">
         <p class="label-txt"><b>Product Name</b></p>
@@ -44,3 +45,34 @@
 </form>
 </body>
 </html>
+<script>
+    function loadSiblings () {
+        const value = document.querySelector('#category').value;
+        // ajax 로 호출
+        // 이것의 길이가 > 0 이상이다
+        // select 하나 추가
+    }
+
+
+    function createSelectBox(id, name, listData){
+        var select = document.createElement('select');
+        select.id = id;
+        select.name = name;
+
+        //최상위 전체 option 삽입
+        var option = document.createElement("option");
+        option.value = "ALL";
+        option.text = "전체";
+        select.appendChild(option);
+
+        for(var i in listData){
+            var option = document.createElement("option");
+            option.value = listData[i].value;
+            option.text = listData[i].text;
+            select.appendChild(option);
+        }
+
+        return select;
+    }
+
+</script>

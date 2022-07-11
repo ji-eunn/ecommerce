@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Details</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 <body>
 
@@ -33,10 +34,40 @@
     </div>
 </div>
 <div>
-    <button th:onclick="location.href='/admin/product/remove/[[${product.productKey}]]'">Delete</button>
+    <button th:onclick="removeProduct('[[${product.productKey}]]')">Delete</button>
+<!--    <button th:onclick="location.href='/admin/product/remove/[[${product.productKey}]]'">Delete</button>-->
     <button th:onclick="location.href='/admin/product/editPage/[[${product.productKey}]]'">Edit</button>
     <button th:onclick="'location.href=\''+ @{/admin/product/listPage} + '\''">List</button>
 </div>
+
+<script>
+function removeProduct(productKey) {
+    // var productKeyArray = $(".deleteBtn").data("productKey");
+    const productKeyArray = [];
+    productKeyArray.push(productKey);
+
+    const confirmAlert = confirm('Are you sure you want to permanently remove this item?');
+
+    if(confirmAlert) {
+
+        $.ajax({
+            type : 'POST'
+            ,url : '/product/checked/remove'
+            ,dataType : 'json'
+            ,data : JSON.stringify(productKeyArray)
+            ,contentType : 'application/json'
+            ,success : function(result) {
+                alert('Item has been deleted.');
+                location.href="/product/listPage";
+            },
+            error : function(request, status, error) {
+
+            }
+        })
+    }
+}
+
+</script>
 
 </body>
 </html>
