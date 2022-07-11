@@ -48,6 +48,7 @@ function removeProduct(productKey) {
 
     const confirmAlert = confirm('Are you sure you want to permanently remove this item?');
 
+    // jQuery 사용 지양!! 왜? 무겁고 느림 (jQuery 단점 찾아보기)
     if(confirmAlert) {
 
         $.ajax({

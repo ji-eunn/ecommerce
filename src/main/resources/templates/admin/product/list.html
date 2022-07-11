@@ -81,7 +81,8 @@ function cchkClicked(){
 
 
 function removeProduct() {
-    var productKeyArray = [];
+    // 변수 선언 시, var 지양!! let, const 사용
+    var productKeyArray = []; // js 에서는 배열처럼 생겼으나 리스트처럼 쓰인다. 즉, 크기가 정해져 있지 않다
 
     $("input:checkbox[name=cchk]:checked").each(function(){
         productKeyArray.push($(this).val());
@@ -100,7 +101,7 @@ function removeProduct() {
 
         $.ajax({
             type : 'POST'
-            ,url : 'checked/remove'
+            ,url : 'checked/remove' // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
             ,dataType : 'json'
             ,data : JSON.stringify(productKeyArray)
             ,contentType : 'application/json'
