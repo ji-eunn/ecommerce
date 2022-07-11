@@ -10,7 +10,7 @@ import java.util.Date;
 public class CartDto {
 
     private Integer cartKey;
-    private String prdName;
+    private String productKey;
     private Integer quantity;
     private Integer price;
     private Integer memberKey;

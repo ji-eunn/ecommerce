@@ -5,14 +5,21 @@
 
     <!-- 요즘에는 외래키를 잘 쓰지 않고, 쿼리로 연결해서 가져온다. 왜? 외래키로 인한 오류 발생 -->
     <select id="selectAll" resultType="cartDto">
-        SELECT CART_KEY, PRD_NAME, QUANTITY, PRICE, MEMBER_KEY, DEL_FLAG, CREATE_TIME
+        SELECT CART_KEY, PRODUCT_KEY, QUANTITY, PRICE, MEMBER_KEY, DEL_FLAG, CREATE_TIME
           FROM CART
-         WHERE DEL_FLAG = 0;
+         WHERE DEL_FLAG = 0
+           AND MEMBER_KEY = #{memberKey}
     </select>
 
     <insert id="insert" parameterType="cartDto">
-        INSERT INTO CART (PRD_NAME, QUANTITY, PRICE, MEMBER_KEY)
-        VALUES (#{prdName}, #{quantity}, #{price}, #{memberKey})
+        INSERT INTO CART (PRODUCT_KEY, QUANTITY, PRICE, MEMBER_KEY)
+        VALUES (#{productKey}, #{quantity}, #{price}, #{memberKey})
     </insert>
+
+    <update id="checkedRemove" parameterType="cartDto">
+        UPDATE CART
+           SET DEL_FLAG = 1
+         WHERE PRODUCT_KEY = #{productKey}
+    </update>
 
 </mapper>
