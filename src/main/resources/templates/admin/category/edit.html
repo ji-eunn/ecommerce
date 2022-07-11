@@ -12,17 +12,16 @@
     <input type="hidden" th:value="${category.categoryKey}">
     <div>
         <div>
+            <select id="categoryKey" name="categoryKey">
+                <option>Select a category</option>
+                <option th:value="${list.upperKey}"
+                        th:text="${list.categoryName}"></option>
+            </select>
+        </div>
+        <div>
             <label>categoryName</label>
             <!-- th: 는 서버에서 받아온 값(session 이나 model)을 표현할 때 쓴다. 필요가 없는데 사용할 경우, 메모리 효율성이 떨어짐 -->
             <input type="text" name="categoryName" th:value="${category.categoryName}">
-        </div>
-        <div>
-            <label>categoryDepth</label>
-            <input type="text" name="categoryDepth" th:value="${category.categoryDepth}">
-        </div>
-        <div>
-            <label>upperKey</label>
-            <input type="text" name="upperKey" th:value="${category.upperKey}">
         </div>
     </div>
     <div>

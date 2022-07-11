@@ -6,20 +6,18 @@
 </head>
 <body>
 <!-- disabled로 분리 -->
-<h2 class="label-txt"><b>카테고리 상세</b></h2>
-
+<h2 class="label-txt"><b>Category Details</b></h2>
+<input type="hidden" th:value="${category.categoryKey}">
 <div>
+    <div>
+        <select id="categoryKey" name="categoryKey">
+            <option>Select a category</option>
+            <option th:value="${category.upperKey}"></option>
+        </select>
+    </div>
     <div>
         <label>categoryName</label>
         <input th:value="${category.categoryName}" disabled>
-    </div>
-    <div>
-        <label>categoryDepth</label>
-        <input th:value="${category.categoryDepth}" disabled>
-    </div>
-    <div>
-        <label>upperKey</label>
-        <input th:value="${category.upperKey}" disabled>
     </div>
 </div>
 <div>

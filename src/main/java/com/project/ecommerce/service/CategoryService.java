@@ -40,6 +40,10 @@ public class CategoryService {
         return searchByKey(categoryDto.getCategoryKey());
     }
 
+    public List<CategoryDto> searchCategory() {
+        return adminMapper.selectTopLevelCategory();
+    }
+
     /*
     Ctrl + 메소드명 클릭 : 해당 메소드가 사용된 곳으로 이동
     Ctrl + Alt + 메소드명 클릭 : 가끔 ServiceImpl 구조가 있는데, 이럴 때는 실제 상속받는 곳에서 메소드가 쓰이기 때문에 해당 위치로 이동

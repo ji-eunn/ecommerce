@@ -5,7 +5,7 @@
 
     <insert id="insertCategory" parameterType= "CategoryDto"> <!-- alias 설정: application.yml > mybatis 설정에서 dto 경로 넣어주고, 나머지는 paraemterType 에 작성 -->
         INSERT INTO CATEGORY (category_name, category_depth, upper_key)
-        VALUES (#{categoryName}, #{categoryDepth}, #{upperKey})
+        VALUES (#{categoryName}, #{categoryDepth}, #{categoryKey})
     </insert>
     <!-- DB 에서 default 값이 있는 것들은 쿼리문에서 넣어주지 않아도 자동으로 들어감
     null 허용일 경우에도 넣어주지 않으면 자동으로 null 값 들어감
@@ -37,4 +37,21 @@
     <update id="updateCategory" parameterType="CategoryDto">
         UPDATE CATEGORY SET CATEGORY_NAME = #{categoryName}, CATEGORY_DEPTH = #{categoryDepth}, UPPER_KEY = #{upperKey} WHERE CATEGORY_KEY = #{categoryKey}
     </update>
+
+    <select id="selectTopLevelCategory" resultType="categoryDto">
+        SELECT CATEGORY_KEY, CATEGORY_NAME
+          FROM CATEGORY
+         WHERE UPPER_KEY IS NULL
+    </select>
+
+    <!-- 카테고리 계층 구조 조회 -->
+<!--    <select id="selectCategoryByUpperKey" resultType="categoryDto">
+        SELECT category1.CATEGORY_NAME,
+               category1.CATEGORY_KEY,
+               category2.CATEGORY_NAME UPPER_KEY
+        FROM category category1
+                 LEFT JOIN category category2
+                           ON category1.upper_key = category2.category_key
+        order BY category1.category_key
+    </select>-->
 </mapper>

@@ -62,7 +62,9 @@ public class CategoryController {
      * 카테고리 등록페이지
      */
     @GetMapping("/category/registerPage")
-    public String createPage() {
+    public String createPage(Model model) {
+        List<CategoryDto> topLevelCategory = adminService.searchCategory();
+        model.addAttribute("topLevelCategory", topLevelCategory);
         return "admin/category/register.html";
     }
 
@@ -84,7 +86,7 @@ public class CategoryController {
                                                          // input 메소드에서는 categoryDto2 로 써도됨
         //        System.out.println(categoryDto);
         adminService.input(categoryDto); // input 을 해줄 때 파라미터로 categoryDto 전달. 그럼 Mybatis 에서 알아서 mapper 의 #{} 에 있는거 찾아서 넣어준다.
-        return "admin/category/register.html";
+        return "redirect:/admin/category/listPage";
     }
 
     /*

@@ -30,4 +30,6 @@ public interface CategoryMapper {
     CategoryDto selectCategoryByKey(@Param("categoryKey") Integer categoryKey);
 
     void updateCategory(CategoryDto categoryDto);
+
+    List<CategoryDto> selectTopLevelCategory();
 }
