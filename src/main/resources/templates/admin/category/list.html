@@ -6,24 +6,23 @@
 </head>
 <!-- Ctrl + F5 : 캐시지우면서 새로고침 -->
 <body>
-    <h2 class="label-txt"><b>카테고리 목록</b></h2>
     <table>
         <thead>
             <tr> <!-- 부모태그(=상위태그) -->
-                <th>번호</th> <!-- 자식태그(=하위태그) -->
-                <th>카테고리명</th>
-                <th>삭제</th>
+                <th>No</th> <!-- 자식태그(=하위태그) -->
+                <th>Category Name</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="list: ${category}" onmouseover="showTab()"> <!-- th:text="${list.categoryName}" == [[${list.categoryName}]] -->
                 <td th:text="${list.categoryKey}"></td>
-                <td><a th:href="'/admin/category/detailPage/'+${list.categoryKey}" th:text="${list.categoryName}"></a></td>
-                <td><button th:onclick="location.href='/admin/category/remove/[[${list.categoryKey}]]'">삭제</button></td>
+                <td><a th:href="'/category/detailPage/'+${list.categoryKey}" th:text="${list.categoryName}"></a></td>
+                <td><button th:onclick="location.href='/category/remove/[[${list.categoryKey}]]'">Delete</button></td>
             </tr>
         </tbody>
     </table>
-    <button th:onclick="'location.href=\''+ @{/admin/category/registerPage} + '\''">추가</button>
+    <button th:onclick="'location.href=\''+ @{/category/registerPage} + '\''">Add</button>
     <!-- <p name="categoryName">[[${categoryName}]]</p> -->
 </form>
 </body>

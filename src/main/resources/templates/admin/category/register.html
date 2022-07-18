@@ -5,7 +5,7 @@
     <title>Create a category</title>
 </head>
 <body>
-<form action="/admin/category/register" method="post"> <!-- Controller 에서의 mapping 정보랑 동일할 경우 action 만 써주면되고, 다를 경우 action="" 에 써서 매칭해주면 됨 -->
+<form action="/category/register" method="post"> <!-- Controller 에서의 mapping 정보랑 동일할 경우 action 만 써주면되고, 다를 경우 action="" 에 써서 매칭해주면 됨 -->
     <div>
         <select id="categoryKey" name="categoryKey">
             <option>Select a category</option>
@@ -15,10 +15,10 @@
         </select>
     </div>
     <label for="categoryName">
-        <p class="label-txt"><b>카테고리명을 입력하세요.</b></p>
+        <p class="label-txt"><b>Category Name</b></p>
         <input type="text" id="categoryName" class="input" name="categoryName">
     </label>
-    <button type="submit">등록</button> <!-- categoryName 에 아무것도 입력안하고 등록 눌러도 DB 로 데이터전송되서 저장되네..? null 허용 아닌데.. -->
+    <button type="submit">Register</button> <!-- categoryName 에 아무것도 입력안하고 등록 눌러도 DB 로 데이터전송되서 저장되네..? null 허용 아닌데.. -->
     <!-- submit 하는 순간 <input>태그의 name 별로 서버로 전송 -->
 </form>
 </body>

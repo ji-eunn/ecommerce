@@ -6,9 +6,9 @@
 </head>
 <body>
 <!-- disabled로 분리 -->
-<h2 class="label-txt"><b>카테고리 수정</b></h2>
+<h2 class="label-txt"><b>Edit a Category</b></h2>
 
-<form th:action="@{'/admin/category/edit/' + ${category.categoryKey}}" method="post">
+<form th:action="@{'/category/edit/' + ${category.categoryKey}}" method="post">
     <input type="hidden" th:value="${category.categoryKey}">
     <div>
         <div>
@@ -26,9 +26,9 @@
     </div>
     <div>
         <!-- th: 는 타임리프 문법을 사용할 때 쓴다 -->
-        <button th:onclick="location.href='/admin/category/remove/[[${category.categoryKey}]]'">삭제</button>
-        <button type="submit">수정</button>
-        <button th:onclick="'location.href=\''+ @{/admin/category/listPage} + '\''">목록</button>
+        <button th:onclick="location.href='/category/remove/[[${category.categoryKey}]]'">Delete</button>
+        <button type="submit">Edit</button>
+        <button th:onclick="'location.href=\''+ @{/category/listPage} + '\''">List</button>
     </div>
 </form>
 </body>

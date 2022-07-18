@@ -21,9 +21,9 @@
     </div>
 </div>
 <div>
-    <button th:onclick="location.href='/admin/category/remove/[[${category.categoryKey}]]'">삭제</button>
-    <button th:onclick="location.href='/admin/category/editPage/[[${category.categoryKey}]]'">수정</button>
-    <button th:onclick="'location.href=\''+ @{/admin/category/listPage} + '\''">목록</button>
+    <button th:onclick="location.href='/category/remove/[[${category.categoryKey}]]'">Delete</button>
+    <button th:onclick="location.href='/category/editPage/[[${category.categoryKey}]]'">Edit</button>
+    <button th:onclick="'location.href=\''+ @{/category/listPage} + '\''">List</button>
 </div>
 </body>
 </html>

@@ -39,7 +39,7 @@ import java.util.List;
     }
 * */
 
-@RequestMapping(path = "/admin")
+@RequestMapping(path = "/category")
 public class CategoryController {
 
      /*
@@ -61,7 +61,7 @@ public class CategoryController {
     /**
      * 카테고리 등록페이지
      */
-    @GetMapping("/category/registerPage")
+    @GetMapping("/registerPage")
     public String createPage(Model model) {
         List<CategoryDto> topLevelCategory = adminService.searchCategory();
         model.addAttribute("topLevelCategory", topLevelCategory);
@@ -80,13 +80,13 @@ public class CategoryController {
     /**
      * 카테고리 등록
      */
-    @PostMapping("/category/register")
+    @PostMapping("/register")
     public String createLogic(CategoryDto categoryDto) { // 파라미터는 타입과 순서만 맞으면 이름이 달라도 상관없다.
                                                          // 즉, createLogic(CategoryDto categoryDto) 이라 작성하고
                                                          // input 메소드에서는 categoryDto2 로 써도됨
         //        System.out.println(categoryDto);
         adminService.input(categoryDto); // input 을 해줄 때 파라미터로 categoryDto 전달. 그럼 Mybatis 에서 알아서 mapper 의 #{} 에 있는거 찾아서 넣어준다.
-        return "redirect:/admin/category/listPage";
+        return "redirect:/category/listPage";
     }
 
     /*
@@ -98,7 +98,7 @@ public class CategoryController {
     /**
      * 카테고리 목록페이지
      */
-    @GetMapping("/category/listPage")
+    @GetMapping("/listPage")
     public String list(Model model) { // Model : Controller 에서 생성된 데이터를 담아 View 로 전달할 때 사용하는 객체
         List<CategoryDto> categoryDto = adminService.search();
         model.addAttribute("category", categoryDto);
@@ -115,24 +115,24 @@ public class CategoryController {
     /**
      * 카테고리 삭제
      */
-    @GetMapping("/category/remove/{categoryKey}")
+    @GetMapping("/remove/{categoryKey}")
     public String remove(@PathVariable("categoryKey") Integer categoryKey) {
         adminService.remove(categoryKey);
-        return "redirect:/admin/category/listPage";
+        return "redirect:/category/listPage";
     }
 
     /**
      * 카테고리 상세페이지, 수정페이지
      * Pathvaraible 경로로 받아오면 좋음
      */
-    @GetMapping("/category/detailPage/{categoryKey}")
+    @GetMapping("/detailPage/{categoryKey}")
     public String detailPage(@PathVariable("categoryKey") Integer categoryKey, Model model) {
         CategoryDto categoryDto = adminService.searchByKey(categoryKey);
         model.addAttribute("category", categoryDto);
         return  "admin/category/detail.html";
     }
 
-    @GetMapping("/category/editPage/{categoryKey}")
+    @GetMapping("/editPage/{categoryKey}")
     // @PathVariable : 경로 변수 (uri 에 있는 무언가를 자바 변수로 받는 것)
     public String editPage(@PathVariable("categoryKey") Integer categoryKey, Model model) {
         CategoryDto categoryDto = adminService.searchByKey(categoryKey);
@@ -153,7 +153,7 @@ public class CategoryController {
          *서버에서 데이터를 보내주는 방법은 여러가지가 있으나
          * 스프링 부트에서는 대부분 Model 에 담아서 보내준다.
     */
-    @PostMapping("/category/edit/{categoryKey}")
+    @PostMapping("/edit/{categoryKey}")
     public String editLogic(@PathVariable("categoryKey") Integer categoryKey,
                             CategoryDto categoryDto, Model model) {
         CategoryDto categoryDto1 = adminService.edit(categoryDto);
