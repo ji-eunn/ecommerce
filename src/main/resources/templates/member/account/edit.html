@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Account</title>
+</head>
+<body>
+<form th:action="@{'/account/edit/' + ${account.memberKey}}" method="post">
+    <input type="hidden" value="${account.memberKey}">
+    <label for="memberName">
+        <p class="label-txt"><b>Name</b></p>
+        <input type="text" id="memberName" th:value="${account.memberName}" class="input" name="memberName" disabled>
+    </label>
+    <label for="email">
+        <p class="label-txt"><b>Email</b></p>
+        <input type="text" id="email" th:value="${account.email}" class="input" name="email">
+    </label>
+    <label for="password">
+        <p class="label-txt"><b>Password</b></p>
+        <input type="password" id="password" th:value="${account.password}" class="input" name="password">
+    </label>
+    <label for="phone">
+        <p class="label-txt"><b>Phone</b></p>
+        <input type="text" id="phone" th:value="${account.phone}" class="input" name="phone">
+    </label>
+    <button type="submit">Edit</button>
+</form>
+</body>
+</html>

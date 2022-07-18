@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <title>Member Account</title>
+</head>
+<body>
+    <input type="hidden" value="${account.memberKey}">
+    <label for="memberName">
+        <p class="label-txt"><b>Name</b></p>
+        <input type="text" id="memberName" th:value="${account.memberName}" class="input" name="memberName" disabled>
+    </label>
+    <label for="email">
+        <p class="label-txt"><b>Email</b></p>
+        <input type="text" id="email" th:value="${account.email}" class="input" name="email" disabled>
+    </label>
+    <label for="password">
+        <p class="label-txt"><b>Password</b></p>
+        <input type="password" id="password" th:value="${account.password}" class="input" name="password" disabled>
+    </label>
+    <label for="phone">
+        <p class="label-txt"><b>Phone</b></p>
+        <input type="text" id="phone" th:value="${account.phone}" class="input" name="phone" disabled>
+    </label>
+    <div>
+        <button th:onclick="removeAccount('[[${account.memberKey}]]')">Delete</button>
+        <button th:onclick="location.href='/account/editPage/[[${account.memberKey}]]'">Edit</button>
+    </div>
+</body>
+<script>
+    function removeAccount(memberKey) {
+
+        const confirmAlert = confirm('Are you sure you want to permanently delete your account?');
+
+        if(confirmAlert) {
+            $.ajax({
+                type : 'POST'
+                ,url : 'account/remove' // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
+                ,dataType : 'json'
+                ,data : JSON.stringify(memberKey)
+                ,contentType : 'application/json'
+                ,success : function(result) {
+                    alert('Your Account was successfully deleted.');
+                    location.reload();
+                },
+                error : function(request, status, error) {
+
+                }
+            })
+        }
+    }
+
+</script>
+</html>

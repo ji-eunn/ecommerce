@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <title>Login</title>
+</head>
+<body>
+<form name="login_form" th:action="@{'/member/login'}" method="post">
+    <label for="email">
+        <p class="label-txt"><b>Email</b></p>
+        <input type="text" id="email" class="input" name="email">
+    </label>
+    <label for="password">
+        <p class="label-txt"><b>Password</b></p>
+        <input type="password" id="password" class="input" name="password">
+    </label>
+    <button type="submit" id="login_btn">Login</button>
+</form>
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login_btn").click(function({
+              const email = $("#email").val();
+              const password = $("password").val();
+
+              if(email == "") {
+                alert("Please enter a valid email address.");
+                $("#email").focus();
+                return;
+              }
+              if(password == "") {
+                  alert("Please enter password.");
+                  $("#email").focus();
+                  return;
+              }
+              document.login_form.submit();
+        });
+        });
+
+</script>
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mybatis 의 경우, API -> DB 부터 작업 -->
+<mapper namespace="com.project.ecommerce.mapper.AccountMapper">
+    <insert id="createMember" parameterType="accountDto">
+        INSERT INTO MEMBER (MEMBER_NAME, EMAIL, PASSWORD, PHONE)
+        VALUES (#{memberName}, #{email}, #{password}, #{phone})
+    </insert>
+
+    <select id="checkMember" parameterType="accountDto" resultType="accountDto">
+        SELECT MEMBER_KEY, MEMBER_NAME, EMAIL, PASSWORD, PHONE, PAS_WRONG, ROLE
+          FROM MEMBER
+         WHERE EMAIL = #{email}
+           AND PASSWORD = #{password}
+           AND DEL_FLAG = 0
+    </select>
+
+    <select id="selectMemberByKey" resultType="accountDto">
+        SELECT MEMBER_KEY, MEMBER_NAME, EMAIL, PASSWORD, PHONE
+          FROM MEMBER
+         WHERE DEL_FLAG = 0
+           AND MEMBER_KEY = #{memberKey}
+    </select>
+
+    <update id="updateAccount" parameterType="accountDto">
+        UPDATE MEMBER
+           SET EMAIL = #{email},
+               PASSWORD = #{password},
+               PHONE = #{phone}
+         WHERE MEMBER_KEY = #{memberKey}
+    </update>
+
+    <update id="deleteAccount" parameterType="accountDto">
+        UPDATE MEMBER
+           SET DEL_FLAG = 1
+         WHERE MEMBER_KEY = #{memberKey}
+    </update>
+
+    <select id="selectMember" resultType="accountDto">
+        SELECT MEMBER_KEY, MEMBER_NAME, EMAIL, PASSWORD, PHONE
+          FROM MEMBER
+         WHERE DEL_FLAG = 0
+    </select>
+
+    <select id="selectEmail" parameterType="string" resultType="int">
+        SELECT count(*)
+          FROM MEMBER
+         WHERE EMAIL = #{email}
+    </select>
+</mapper>

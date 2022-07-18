@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account List</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="list: ${account}">
+        <td th:text="${list.memberKey}"></td>
+        <td><a th:href="'/account/detailPage/'+${list.memberKey}" th:text="${list.memberName}"></a></td>
+        <td th:text="${list.email}"></td>
+        <td th:text="${list.phone}"></td>
+        <td><button th:onclick="location.href='/account/editPage/[[${list.memberKey}]]'">Edit</button></td>
+        <td><button th:onclick="location.href='/account/remove/[[${list.memberKey}]]'">Delete</button></td>
+    </tr>
+    </tbody>
+</table>
+</form>
+</body>
+
+<script>
+
+</script>
+</html>
