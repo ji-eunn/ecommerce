@@ -21,11 +21,19 @@ public class MainController {
     @Autowired
     MainService mainService;
 
-
-
     @GetMapping("/")
     public String indexPage() {
-        return "cart.html";
+        return "main.html";
+    }
+
+    @GetMapping("/admin")
+    public String adminMainPage() {
+        return "admin/main.html";
+    }
+
+    @GetMapping("/member")
+    public String memberMainPage() {
+        return "member/main.html";
     }
 
 

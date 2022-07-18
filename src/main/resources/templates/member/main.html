@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Member</title>
+</head>
+<body>
+<h1>Member Main</h1>
+<ul>
+    <li>Category</li>
+    <li>Product</li>
+    <li><a th:href="'/account/editPage/[[${list.memberKey}]]'">MyInfo</a></li>
+</ul>
+</body>
+</html>
