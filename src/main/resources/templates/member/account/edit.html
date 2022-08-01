@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <title>Member Account</title>
 </head>
 <body>
@@ -23,7 +24,32 @@
         <p class="label-txt"><b>Phone</b></p>
         <input type="text" id="phone" th:value="${account.phone}" class="input" name="phone">
     </label>
-    <button type="submit">Edit</button>
+    <!--<button type="submit">Edit</button>-->
+    <button type="button" id="edit_btn" onclick="editAccount('[[${account.memberKey}]]')">Edit</button>
 </form>
 </body>
+<script>
+    function editAccount(memberKey) {
+
+        const confirmAlert = confirm('Are you sure you want to edit your account?');
+
+        if(confirmAlert) {
+            $.ajax({
+                type : 'POST'
+                ,url : '/ajax/account/edit2' // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
+                ,dataType : 'json'
+                ,data : JSON.stringify(memberKey)
+                ,contentType : 'application/json'
+                ,success : function() {
+                    alert('Your Account was successfully updated.');
+                    location.reload();
+                },
+                error : function(request, status, error) {
+
+                }
+            })
+        }
+    }
+
+</script>
 </html>

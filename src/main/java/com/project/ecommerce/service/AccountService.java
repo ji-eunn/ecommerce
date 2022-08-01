@@ -1,5 +1,6 @@
 package com.project.ecommerce.service;
 
+import com.project.ecommerce.config.Sha256;
 import com.project.ecommerce.dto.AccountDto;
 import com.project.ecommerce.mapper.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class AccountService {
     AccountMapper accountMapper;
 
     public int join(AccountDto memberDto) {
+
+
+        memberDto.setPassword(Sha256.encrypt(memberDto.getPassword()));
 
         if (confirmEmail(memberDto.getEmail())) {
             return 0;

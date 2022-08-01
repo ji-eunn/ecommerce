@@ -16,6 +16,7 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
+
     /**
      * 회원 가입 페이지
      */
@@ -89,14 +90,11 @@ public class AccountController {
         return "admin/account/list.html";
     }
 
-
-
-
-//    /**
-//     * 로그인 페이지
-//     */
-//    @GetMapping("/loginPage")
-//    public String loginPage() { return "/member/account/login.html"; }
+    /**
+     * 로그인 페이지
+     */
+    @GetMapping("/loginPage")
+    public String loginPage() { return "/member/account/login.html"; }
 //
 //
 //    /**

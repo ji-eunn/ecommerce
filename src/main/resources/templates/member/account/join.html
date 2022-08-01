@@ -4,105 +4,77 @@
     <title>Sign Up</title>
 </head>
 <body>
-<form id="join_form" action="/account/join" method="post">
-    <label for="memberName">
-        <p class="label-txt"><b>Name</b></p>
-        <input type="text" id="memberName" class="input" name="memberName">
-    </label>
-    <label for="email">
-        <p class="label-txt"><b>Email</b></p>
-        <input type="text" id="email" class="input" name="email" oninput="confirmEmail('${/ajax/account/email}', this.value);">
-        <label id="confirm_email_res"></label>
-    </label>
-    <label for="password">
-        <p class="label-txt"><b>Password</b></p>
-        <input type="password" id="password" class="input" name="password">
-    </label>
-    <label for="confirm_password">
-        <p class="label-txt"><b>Confirm Password</b></p>
-        <input type="password" id="confirm_password" class="input" name="confirm_password" onkeyup="confirmPassword()"><span id="confirmAlert"></span>
-    </label>
-    <label for="phone">
-        <p class="label-txt"><b>Phone</b></p>
-        <input type="text" id="phone" class="input" name="phone">
-    </label>
-    <button type="submit" id="join_btn" onclick="join();">Register</button>
-</form>
-</body>
-</html>
-<script>
 
-    if ([[${error}]]) {
-        alert("이미 있는 회원 정보입니다.");
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    let compare_result = false;
+    $('#email').oninput(confirmEmail());
+
+    function docReady(fn) {
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
     }
+
+    docReady(function () {
+    })
 
     function confirmPassword() {
         const password = document.getElementById('password');
         const confirmPassword = document.getElementById('confirm_password');
         const confirmAlert = document.getElementById('confirmAlert');
-        const correctColor = "#00ff00";
-        const incorrectColor = "#ff0000";
+        const correctColor = "green";
+        const incorrectColor = "red";
 
-        if(password.value == confirmPassword.value) {
+        if(!/^[a-zA-Z0-9]{6,20}$/.test(password.value)) {
+            alert ('Password must be 6-20 characters and contain both numbers and letters characters.')
+            password.value="";
+            confirmPassword.value="";
+            password.focus();
+            return false;
+        }
+
+        let chk_num = password.value.search(/[0-9]/g);
+        let chk_eng = password.value.search(/[a-z]/ig);
+
+        if(chk_num < 0 || chk_eng < 0) {
+            alert ('Password must be include at least one letter(a-z, A-Z) and one number(0-9).');
+            password.value="";
+            confirmPassword.value="";
+            password.focus();
+            return false;
+        }
+
+        if (password.value === confirmPassword.value) {
             confirmAlert.style.color = correctColor;
             confirmAlert.innerHTML = "Correct Password";
+            compare_result = true; // 앞으로 바뀔 만한 자바스크립트의 변수는 let 으로 선언
         } else {
             confirmAlert.style.color = incorrectColor;
             confirmAlert.innerHTML = 'Incorrect Password';
+            compare_result = false;
         }
-    }
-
-    function join() {
-        const memberName = document.getElementById("memberName");
-        if(memberName.value == "" || memberName.value == undefined) {
-            alert("Please enter your name.");
-            memberName.focus();
-            return;
-        }
-
-        const confirm_email = document.getElementById("confirm_email_res").innerText;
-        if(confirm_email == "" || confirm_email == undefined) {
-            alert("Please enter your email.");
-            confirm_email.focus();
-        } else if (confirm_email != "Available") {
-            alert("Email address is already exists.");
-            document.getElementById("email").focus();
-            return;
-        }
-
-        const password = document.getElementById("password");
-        if(password.value == "" || password.value == undefined) {
-            alert("Please enter a password");
-            password.focus();
-            return;
-        }
-
-        if(!compare_result) {
-            alert("Please enter the same password as above.");
-            return;
-        }
-
-        document.join_form.submit();
-        alert("Your account has been created successfully.");
-
     }
 
     function confirmEmail() {
-        const confirm_email = document.getElementById("confirm_email_res").innerText;
-        if(confirm_email == "" || confirm_email == undefined) {
-            alert("Please enter your email.");
-            confirm_email.focus();
-            return;
+        const email = document.getElementById("email").value; // 화면 html 에서 email 이란 ID 에서 값을 가져옴
+        if (email === "" || email === undefined) {
+            // 이메일이 값이 있는지 검사
+            alert("Please enter your email."); // 값이 없으면 alert 창 발생
+            email.focus(); // 해당 html 포커싱하고
+            return; // 로직 종료
         }
         $.ajax({
-            url: "${/ajax/account/email}",
+            url: "/ajax/account/email",
             type: "get",
             datatype: "json",
             data: {
                 email: document.getElementById("email").value
             },
-            success: function(data) {
-                if(data.result == false) {
+            success: function (data) {
+                if (data.result == false) {
                     document.getElementById('confirm_email_res').style.color = "green";
                     document.getElementById('confirm_email_res').innerText = "Available";
                 } else {
@@ -113,6 +85,97 @@
         });
     }
 
+    function join() {
+        const memberName = document.getElementById("memberName");
+        if (memberName.value === "" || memberName.value === undefined) {
+            alert("Please enter your name.");
+            memberName.focus();
+            return;
+        }
 
+        confirmEmail();
+
+        const password = document.getElementById("password");
+        if (password.value === "" || password.value === undefined) { // === 값, 타입 같은지 모두 검사
+            alert("Please enter a password");
+            password.focus();
+            return;
+        }
+
+        if (!compare_result) {
+            alert("Please enter the same password as above.");
+            return;
+        }
+
+        const phone = document.getElementById("phone");
+        let a = phone.value.replaceAll("-","");
+
+        // phone.value = phone.value.replaceAll("-","");
+        $('#phone').val(phone.value.replaceAll("-",""));
+
+
+        if (isNaN(a)) { // 숫자가 아니면 true, 맞으면 false
+            alert("Please enter number case in Phone tab.")
+            return;
+            // true
+        }
+
+        // document.getElementById('join_form').submit();
+        // ajax 로직 추가
+        $.ajax({
+            url: "/ajax/account/joinLogic",
+            type: "post",
+            datatype: "json",
+            data: {
+                email: document.getElementById("email").value,
+                memberName: document.getElementById("memberName").value,
+                password: document.getElementById("password").value,
+                phone: document.getElementById("phone").value
+            },
+            success: function (data) {
+                if (data === 1) {
+                    alert("회원가입이 완료되었습니다.");
+                    location.href="/member/account/login.html";
+                    // document.getElementById("phone").value = data.phone;
+                } else {
+                    alert("회원가입이 실패하였습니다.");
+                }
+            }
+        });
+
+
+
+
+        alert("Your account has been created successfully.");
+
+    }
 
 </script>
+<form id="join_form" action="/account/join" method="post">
+    <label for="memberName">
+        <p class="label-txt"><b>Name</b></p>
+        <input type="text" id="memberName" class="input" name="memberName">
+    </label>
+    <label for="email">
+        <p class="label-txt"><b>Email</b></p>
+        <input type="email" id="email" class="input" name="email">
+        <button type="button" id="check_email" onclick="confirmEmail();">check duplication</button>
+        <p id="confirm_email_res"></p>
+    </label>
+    <label for="password">
+        <p class="label-txt"><b>Password</b></p>
+        <input type="password" id="password" class="input" name="password">
+    </label>
+    <label for="confirm_password">
+        <p class="label-txt"><b>Confirm Password</b></p>
+        <input type="password" id="confirm_password" class="input" name="confirm_password" onkeyup="confirmPassword()">
+        <p id="confirmAlert"></p>
+    </label>
+    <label for="phone">
+        <p class="label-txt"><b>Phone (only number)</b></p>
+        <input type="tel" id="phone" class="input" name="phone">
+    </label>
+    <button type="button" id="join_btn" onclick="join();">Register</button>
+</form>
+</body>
+</html>
