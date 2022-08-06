@@ -59,6 +59,8 @@ public class AjaxAccountController {
     public AccountDto editLogic2(AccountDto accountDto) {
         return accountService.edit(accountDto);
     }
+    // insomnia 에서 테스트할 때 POST 는 JSON 형식으로 데이터도 넣어줘야 함
+
 
 
 }
