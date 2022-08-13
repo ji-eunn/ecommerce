@@ -43,8 +43,8 @@ public class AccountController {
      * 회원 정보 페이지
      */
     @GetMapping("/detailPage/{memberKey}")
-    public String detailPage(Model model) {
-        int memberKey = 1;
+    public String detailPage(Model model, @PathVariable("memberKey") Integer memberKey) {
+//        int memberKey = 1;
         AccountDto accountDto = accountService.searchByKey(memberKey);
         model.addAttribute("account", accountDto);
         return "/member/account/detail.html";

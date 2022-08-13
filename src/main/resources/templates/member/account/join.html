@@ -67,7 +67,7 @@
             return; // 로직 종료
         }
         $.ajax({
-            url: "/ajax/account/email",
+            url: "/member/email",
             type: "get",
             datatype: "json",
             data: {
@@ -123,7 +123,7 @@
         // document.getElementById('join_form').submit();
         // ajax 로직 추가
         $.ajax({
-            url: "/ajax/account/joinLogic",
+            url: "/member",
             type: "post",
             datatype: "json",
             data: {

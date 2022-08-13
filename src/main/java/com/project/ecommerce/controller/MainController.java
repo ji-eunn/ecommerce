@@ -31,10 +31,10 @@ public class MainController {
         return "admin/main.html";
     }
 
-    @GetMapping("/member")
-    public String memberMainPage() {
-        return "member/main.html";
-    }
+//    @GetMapping("/member")
+//    public String memberMainPage() {
+//        return "member/main.html";
+//    }
 
 
     @GetMapping("/index2")

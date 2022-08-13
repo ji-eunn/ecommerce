@@ -6,7 +6,7 @@
     <title>Member Account</title>
 </head>
 <body>
-<form th:action="@{'/account/edit/' + ${account.memberKey}}" method="post">
+<!--<form th:action="@{'/account/edit/' + ${account.memberKey}}" method="post">
     <input type="hidden" value="${account.memberKey}">
     <label for="memberName">
         <p class="label-txt"><b>Name</b></p>
@@ -24,11 +24,49 @@
         <p class="label-txt"><b>Phone</b></p>
         <input type="text" id="phone" th:value="${account.phone}" class="input" name="phone">
     </label>
-    <!--<button type="submit">Edit</button>-->
+    &lt;!&ndash;<button type="submit">Edit</button>&ndash;&gt;
     <button type="button" id="edit_btn" onclick="editAccount('[[${account.memberKey}]]')">Edit</button>
-</form>
+</form>-->
+<div>
+    <input type="hidden" value="${account.memberKey}">
+    <label for="memberName">
+        <p class="label-txt"><b>Name</b></p>
+        <input type="text" id="memberName" class="input" name="memberName" disabled>
+    </label>
+    <label for="email">
+        <p class="label-txt"><b>Email</b></p>
+        <input type="text" id="email" class="input" name="email">
+    </label>
+    <label for="password">
+        <p class="label-txt"><b>Password</b></p>
+        <input type="password" id="password" class="input" name="password">
+    </label>
+    <label for="phone">
+        <p class="label-txt"><b>Phone</b></p>
+        <input type="text" id="phone" class="input" name="phone">
+    </label>
+</div>
 </body>
 <script>
+
+    $.ajax({
+        type : 'PUT'
+        ,url : '/member/' + key  // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
+        ,dataType : 'json'
+        ,data : JSON.stringify()
+        ,contentType : 'application/json'
+        ,success : function(result) {
+            document.getElementById("memberName").value = result.memberName;
+            document.getElementById("email").value = result.email;
+            document.getElementById("password").value = result.password;
+            document.getElementById("phone").value = result.phone;
+        },
+        error : function(request, status, error) {
+
+        }
+
+    })
+
     function editAccount(memberKey) {
 
         const confirmAlert = confirm('Are you sure you want to edit your account?');

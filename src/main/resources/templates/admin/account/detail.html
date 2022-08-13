@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <title>Member Account</title>
 </head>
 <body>
+<div>
+    <label for="memberName">
+        <p class="label-txt"><b>Name</b></p>
+        <input type="text" id="memberName" class="input" name="memberName" disabled>
+    </label>
+    <label for="email">
+        <p class="label-txt"><b>Email</b></p>
+        <input type="text" id="email" class="input" name="email" disabled>
+    </label>
+    <label for="password">
+        <p class="label-txt"><b>Password</b></p>
+        <input type="password" id="password" class="input" name="password" disabled>
+    </label>
+    <label for="phone">
+        <p class="label-txt"><b>Phone</b></p>
+        <input type="text" id="phone" class="input" name="phone" disabled>
+    </label>
+    <div id ="button">
 
+    </div>
+</div>
 </body>
+
+<script>
+    //  th:value 지워주고 id 기반으로 (타임리프는 주석도 읽는다..)
+    const key = window.location.pathname.split("/").pop() // window.location.pathname = uri, split("/") = / 별로 자르겠다. pop() = 가장 마지막에 있는걸 꺼내오겠다
+    console.log(key)
+
+    $.ajax({
+        type : 'GET'
+        ,url : '/member/' + key  // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
+        ,dataType : 'json'
+        ,data : JSON.stringify()
+        ,contentType : 'application/json'
+        ,success : function(result) {
+            document.getElementById("memberName").value = result.memberName;
+            document.getElementById("email").value = result.email;
+            document.getElementById("password").value = result.password;
+            document.getElementById("phone").value = result.phone;
+            $('#button').append(" <button onclick=\"removeAccount(result.memberKey)\">Delete</button>\n" +
+                "<button onclick=\"location.href='/member/" + result.memberKey + "'\">Edit</button>")
+        },
+        error : function(request, status, error) {
+
+        }
+
+    })
+
+</script>
 </html>

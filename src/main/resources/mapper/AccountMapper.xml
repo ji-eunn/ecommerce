@@ -31,7 +31,7 @@
          WHERE MEMBER_KEY = #{memberKey}
     </update>
 
-    <update id="deleteAccount" parameterType="accountDto">
+    <update id="deleteAccount" parameterType="Integer">
         UPDATE MEMBER
            SET DEL_FLAG = 1
          WHERE MEMBER_KEY = #{memberKey}
