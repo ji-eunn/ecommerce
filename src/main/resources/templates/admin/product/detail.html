@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
     <title>Product Details</title>
@@ -8,39 +8,59 @@
 <body>
 
 <div>
-    <div>
+    <label for="productName">
         <p class="label-txt"><b>productName</b></p>
-        <input th:value="${product.productName}" size=40 disabled>
-    </div>
-    <div>
+        <input type="text" id="productName" size=40 disabled>
+    </label>
+    <label for="description">
         <p class="label-txt"><b>Description</b></p>
-        <textarea th:value="${product.description}" th:text="${product.description}" cols=40 rows=10 disabled></textarea>
-    </div>
-    <div>
+        <textarea type="text" id="description" th:text="${product.description}" cols=40 rows=10 disabled></textarea>
+    </label>
+    <label for="price">
         <p class="label-txt"><b>Price</b></p>
-        <input th:value="${product.price}" disabled>
-    </div>
-    <div>
+        <input type="text" id="price" disabled>
+    </label>
+    <label for="brand">
         <p class="label-txt"><b>Brand</b></p>
-        <input th:value="${product.brand}" disabled>
-    </div>
-    <div>
+        <input type="text" id="brand" disabled>
+    </label>
+    <label for="color">
         <p class="label-txt"><b>Color</b></p>
-        <input th:value="${product.color}" disabled>
-    </div>
-    <div>
+        <input type="text" id="color" disabled>
+    </label>
+    <label for="stock">
         <p class="label-txt"><b>Stock</b></p>
-        <input th:value="${product.stock}" disabled>
-    </div>
+        <input type="text" id="stock" disabled>
+    </label>
 </div>
 <div>
     <button th:onclick="removeProduct('[[${product.productKey}]]')">Delete</button>
-<!--    <button th:onclick="location.href='/admin/product/remove/[[${product.productKey}]]'">Delete</button>-->
     <button th:onclick="location.href='/admin/product/editPage/[[${product.productKey}]]'">Edit</button>
     <button th:onclick="'location.href=\''+ @{/admin/product/listPage} + '\''">List</button>
 </div>
 
 <script>
+    const key = window.location.pathname.split("/").pop()
+
+    $.ajax({
+        type : 'GET'
+        ,url : '/product/' + key  // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
+        ,dataType : 'json'
+        ,contentType : 'application/json'
+        ,success : function(result) {
+            document.getElementById("productName").value = result.productName;
+            document.getElementById("description").value = result.description;
+            document.getElementById("price").value = result.price;
+            document.getElementById("brand").value = result.brand;
+            document.getElementById("color").value = result.color;
+            document.getElementById("stock").value = result.stock;
+            $('#button').append(" <button onclick=\"removeAccount(result.memberKey)\">Delete</button>\n" +
+                "<button onclick=\"location.href='/member/" + result.memberKey + "'\">Edit</button>")
+        },
+        error : function(request, status, error) {
+
+        }
+    })
 function removeProduct(productKey) {
     // var productKeyArray = $(".deleteBtn").data("productKey");
     const productKeyArray = [];
@@ -48,26 +68,25 @@ function removeProduct(productKey) {
 
     const confirmAlert = confirm('Are you sure you want to permanently remove this item?');
 
-    // jQuery 사용 지양!! 왜? 무겁고 느림 (jQuery 단점 찾아보기)
+    // jQuery 사용 지양!! 왜? 무겁고 느림
     if(confirmAlert) {
 
         $.ajax({
             type : 'POST'
-            ,url : '/product/checked/remove'
+            ,url : '/product/'
             ,dataType : 'json'
             ,data : JSON.stringify(productKeyArray)
             ,contentType : 'application/json'
-            ,success : function(result) {
+            ,success : function() {
                 alert('Item has been deleted.');
                 location.href="/product/listPage";
             },
-            error : function(request, status, error) {
-
+            error : function(request, status) {
+                alert(status + " 에러가 발생했습니다. \r 관리자에게 문의 주십시오 .")
             }
         })
     }
 }
-
 </script>
 
 </body>

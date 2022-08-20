@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -23,7 +23,6 @@
     </tr>
     </tbody>
 </table>
-</form>
 </body>
 
 <script>
@@ -31,18 +30,13 @@
         type: 'GET'
         , url: '/member' // / 가붙으면 프로젝트 경로, 안붙으면 지금 경로에서!
         , dataType: 'json'
-        , data: JSON.stringify()
         , contentType: 'application/json'
         , success: function (result) { // AjaxAccountController 에서 findList 메소드로 return 해준 값을 result 로 받겠다.
 
             // result 가 배열이기 때문에 for 문으로 반복
             for (let i = 0; i < result.length; i++) {
-                // $('#email').val(result[i].email); // jquery 지양
-                // $('#memKey').val(result[i].memberKey)
-                // console.log(result[i]);
-                // const table = document.getElementById('table')
                 $('#table').append(" <tr> <td>" + result[i].memberKey + "</td>\n" +
-                    "        <td>" + result[i].memberName + "</td>\n" +
+                    "        <td><a href='/account/detailPage/" + result[i].memberKey + "'>" + result[i].memberName + "</a></td>\n" +
                     "        <td>" + result[i].email + "</td>\n" +
                     "        <td>" + result[i].phone + "</td>" +
                     " <td><button onclick=\"location.href='/account/editPage/"+result[i].memberKey+"'\">Edit</button></td>\n" +
@@ -51,7 +45,6 @@
 
 
             }
-
             console.log(result);
         }
     })

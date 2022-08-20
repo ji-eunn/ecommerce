@@ -4,14 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Getter
 @Setter
 public class AccountDto {
 
     private Integer memberKey;
-/*    private String memberId;*/
     private String memberName;
     private String email;
     private String password;
@@ -20,7 +18,6 @@ public class AccountDto {
     private Integer delFlag;
     private Timestamp delTime;
     private Integer pasWrong; // 비밀번호 불일치 횟수
-    private Integer role; // 0 - 일반사용자, 1 - 관리자
+    private Integer role;     // 0 - 일반사용자, 1 - 관리자
     private Timestamp loginTime;
-
 }

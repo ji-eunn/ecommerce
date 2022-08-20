@@ -1,123 +1,134 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <title>Product List</title>
 </head>
 <body>
-    <h2 class="label-txt"><b>Product List</b></h2>
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="allCheckBox" class="chk" th:onclick="allChecked(this)">
-                    </label>
-                </th>
-                <th>No</th> <!-- 번호 문자 숫자 조합 -->
-                <th>Product Name</th>
-                <th>Brand</th>
-                <th>Price</th>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="list: ${product}"> <!-- th:each 는 java 의 향상된 for 문 이라고 생각하면 된다 -->
-                <td>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" class="chk" name="cchk" th:onclick="cchkClicked()" th:value="${list.productKey}">
-                    </label>
-                </td>
-                <td th:text="${list.productKey}"></td>
-                <td><a th:href="'/product/detailPage/'+${list.productKey}" th:text="${list.productName}"></a></td>
-                <td th:text="${list.brand}"></td>
-                <td th:text="${list.price}"></td>
-                <td th:text="${list.stock}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- <p name="categoryName">[[${categoryName}]]</p> -->
-    <button th:onclick="'location.href=\''+ @{/product/registerPage} + '\''">Add</button>
-    <button th:onclick="'javascript:removeProduct();'">Delete</button>
-</form>
+<h2 class="label-txt"><b>Product List</b></h2>
+<table id="table">
+    <thead>
+    <tr>
+        <th>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="allCheckBox" class="chk" th:onclick="allChecked(this)">
+            </label>
+        </th>
+        <th>No</th>
+        <th>Product Name</th>
+        <th>Brand</th>
+        <th>Price</th>
+        <th>Stock</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="products">
+
+    </tr>
+    </tbody>
+</table>
 </body>
 
 <script>
-// 체크박스 전체 선택 클릭 이벤트
-function allChecked(target){
-console.log(target);
-
-    if($(target).is(":checked")){
-        // 체크박스 전체 체크
-        $(".chk").prop("checked", true);
-    }
-
-    else {
-        // 체크박스 전체 해제
-        $(".chk").prop("checked", false);
-    }
-}
-
-// 자식 체크박스 클릭 이벤트
-function cchkClicked(){
-
-    //체크박스 전체개수
-    var allCount = $("input:checkbox[name=cchk]").length;
-
-    // 체크된 체크박스 전체개수
-    var checkedCount = $("input:checkbox[name=cchk]:checked").length;
-
-    // 체크박스 전체개수와 체크된 체크박스 전체개수가 같으면 체크박스 전체 체크
-    if(allCount == checkedCount){
-        $(".chk").prop("checked", true);
-    }
-
-    // 같지않으면 전체 체크박스 해제
-    else {
-        $("#allCheckBox").prop("checked", false);
-    }
-}
-
-
-function removeProduct() {
-    // 변수 선언 시, var 지양!! let, const 사용
-    var productKeyArray = []; // js 에서는 배열처럼 생겼으나 리스트처럼 쓰인다. 즉, 크기가 정해져 있지 않다
-
-    $("input:checkbox[name=cchk]:checked").each(function(){
-        productKeyArray.push($(this).val());
-    })
-
-    console.log(productKeyArray);
-
-    if(productKeyArray == "") {
-        alert("Please select one record to be deleted.");
-        return false;
-    }
-
-    var confirmAlert = confirm('Are you sure you want to permanently remove this item?');
-
-    if(confirmAlert) {
-
-        $.ajax({
-            type : 'POST'
-            ,url : 'checked/remove' // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
-            ,dataType : 'json'
-            ,data : JSON.stringify(productKeyArray)
-            ,contentType : 'application/json'
-            ,success : function(result) {
-                alert('Item has been deleted.');
-                location.reload();
-            },
-            error : function(request, status, error) {
+    $.ajax({
+        type: 'GET'
+        , url: '/product'
+        , dataType: 'json'
+        , contentType: '/application/json'
+        , success: function (result) {
+            for (let i = 0; i < result.length; i++) {
+                $('#table').append(
+                    " <tr> " +
+                    "        <td>\n" +
+                    "           <label class=\"checkbox-inline\">\n" +
+                    "               <input type=\"checkbox\" class=\"chk\" name=\"cchk\" onclick='cchkClicked()' value=" + result[i].productKey + ">\n" +
+                    "           </label>\n" +
+                    "        </td>" +
+                    "        <td>" + result[i].productKey + "</td>\n" +
+                    "        <td><a href='/product/editPage/" + result[i].productKey + "'>" + result[i].productName + "</a></td>\n" +
+                    "        <td>" + result[i].brand + "</td>\n" +
+                    "        <td>" + result[i].price + "</td>" +
+                    "        <td>" + result[i].stock + "</td>" +
+                    "        <td><button onclick=\"location.href='/product/editPage/" + result[i].productKey + "'\">Edit</button></td>\n" +
+                    "        <td><button onclick='removeProduct()'>Delete</button></td>" +
+                    "</tr>")
 
             }
-        })
+        }
+    })
+
+    // 체크박스 전체 선택 클릭 이벤트
+    function allChecked(target) {
+
+        if ($(target).is(":checked")) {
+            // 체크박스 전체 체크
+            $(".chk").prop("checked", true);
+        } else {
+            // 체크박스 전체 해제
+            $(".chk").prop("checked", false);
+        }
     }
-}
-// location.reload(); -> RestController 는 페이지를 반환하는 게 아니라 데이터만 반환하기 때문에
-// Controller 내 메소드에서 화면을 반환해주지 않는다. 따라서 ajax 에서 location.reload() 를 통해
-// 삭제 후 현재페이지(listPage) 를 다시 reload 해줌으로써 삭제된 상품이 목록에서 바로 제거되어 보여질 수 있게 한다.
+
+    // 자식 체크박스 클릭 이벤트
+    function cchkClicked() {
+        //체크박스 전체개수
+        const allCount = $("input:checkbox[name=cchk]").length;
+
+        // 체크된 체크박스 전체개수
+        const checkedCount = $("input:checkbox[name=cchk]:checked").length;
+
+        // 체크박스 전체개수와 체크된 체크박스 전체개수가 같으면 체크박스 전체 체크
+        if (allCount === checkedCount) {
+            $(".chk").prop("checked", true);
+        }
+
+        // 같지않으면 전체 체크박스 해제
+        else {
+            $("#allCheckBox").prop("checked", false);
+        }
+    }
+
+
+    function removeProduct() {
+        // 변수 선언 시, var 지양!! let, const 사용
+        const productKeyArray = []; // js 에서는 배열처럼 생겼으나 리스트처럼 쓰인다. 즉, 크기가 정해져 있지 않다
+        $("input:checkbox[name=cchk]:checked").each(function () {
+            console.log($(this))
+            productKeyArray.push($(this).val());
+        })
+
+        if (productKeyArray === "") {
+            alert("Please select one record to be deleted.");
+            return false;
+        }
+
+        const confirmAlert = confirm('Are you sure you want to permanently remove this item?');
+
+        if (confirmAlert) {
+
+            $.ajax({
+                type: 'POST'
+                , url: 'checked/remove' // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
+                , dataType: 'json'
+                , data: JSON.stringify(productKeyArray)
+                , contentType: 'application/json'
+                , success: function () {
+                    alert('Item has been deleted.');
+                    location.reload();
+                },
+                error: function (request, status, error) {
+
+                }
+            })
+        }
+    }
+
+/*
+    location.reload(); -> RestController 는 페이지를 반환하는 게 아니라 데이터만 반환하기 때문에
+    Controller 내 메소드에서 화면을 반환해주지 않는다. 따라서 ajax 에서 location.reload() 를 통해
+    삭제 후 현재페이지(listPage) 를 다시 reload 해줌으로써 삭제된 상품이 목록에서 바로 제거되어 보여질 수 있게 한다.
+*/
 
 </script>
 </html>

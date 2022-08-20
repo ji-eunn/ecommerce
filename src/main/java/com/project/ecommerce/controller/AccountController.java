@@ -2,6 +2,7 @@ package com.project.ecommerce.controller;
 
 import com.project.ecommerce.dto.AccountDto;
 import com.project.ecommerce.service.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "/account")
+@RequiredArgsConstructor
 public class AccountController {
 
-    @Autowired
-    AccountService accountService;
+    private final AccountService accountService;
 
 
     /**
@@ -56,7 +57,7 @@ public class AccountController {
     @GetMapping("/editPage/{memberKey}")
     public String editPage(@PathVariable("memberKey") Integer memberKey, Model model) {
         AccountDto accountDto = accountService.searchByKey(memberKey);
-        model.addAttribute("account", accountDto);
+        model.addAttribute("account", accountDto); // RestController 라 원래같았으면 페이지만 return 해줬어야 하는데..수정할 정보까지 controller 에서 처리해서 model 에 담아보내줌
         return "/member/account/edit.html";
     }
 
@@ -95,33 +96,33 @@ public class AccountController {
      */
     @GetMapping("/loginPage")
     public String loginPage() { return "/member/account/login.html"; }
-//
-//
-//    /**
-//     * 로그인
-//     */
-//    @PostMapping("/login")
-//    public String loginLogic(MemberDto memberDto, HttpServletRequest request, Model model) {
-//
-//        String forward = "";
-//        accountService.login(memberDto);
-//
-//        // 로그인 성공
-//        if(memberDto.getMemberKey() > 0) {
-//            HttpSession session = request.getSession();
-//            session.setAttribute("account", memberDto);
-//            session.setAttribute("logined", true);
-//
-//            forward = "redirect:/";
-//        // 로그인 실패
-//        } else {
-//            model.addAttribute("data", memberDto);
-//            model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
-//            forward = "/member/account/login.html";
-//        }
-//
-//        return forward;
-//    }
+
+
+   /* *//**
+     * 로그인
+     *//*
+    @PostMapping("/login")
+    public String loginLogic(MemberDto memberDto, HttpServletRequest request, Model model) {
+
+        String forward = "";
+        accountService.login(memberDto);
+
+        // 로그인 성공
+        if(memberDto.getMemberKey() > 0) {
+            HttpSession session = request.getSession();
+            session.setAttribute("account", memberDto);
+            session.setAttribute("logined", true);
+
+            forward = "redirect:/";
+        // 로그인 실패
+        } else {
+            model.addAttribute("data", memberDto);
+            model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
+            forward = "/member/account/login.html";
+        }
+
+        return forward;
+    }*/
 
 
 }

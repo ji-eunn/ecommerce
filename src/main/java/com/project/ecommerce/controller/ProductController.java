@@ -3,6 +3,7 @@ package com.project.ecommerce.controller;
 import com.project.ecommerce.dto.CategoryDto;
 import com.project.ecommerce.dto.ProductDto;
 import com.project.ecommerce.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +14,13 @@ import java.util.List;
 // application.yml -> port 변경
 @Controller
 @RequestMapping(path= "/product")
+@RequiredArgsConstructor
 public class ProductController {
 
-    @Autowired
-    ProductService productService;
+    private final ProductService productService;
 
     /**
-     * 상품 등록페이지
+     * 상품 등록 페이지
      */
     @GetMapping("/registerPage")
     public String createPage(Model model) {
@@ -34,11 +35,11 @@ public class ProductController {
     @PostMapping("/register")
     public String createLogic(ProductDto productDto) {
         productService.addProduct(productDto);
-        return "redirect:/admin/product/listPage"; // 등록하면 목록페이지로 이동되도록 처리
+        return "redirect:/admin/product/listPage";
     }
 
     /**
-     * 상품 목록페이지
+     * 상품 목록 페이지
      */
     @GetMapping("/listPage")
     public String list(Model model) {
@@ -48,7 +49,7 @@ public class ProductController {
     }
 
     /**
-     * 상품 상세페이지
+     * 상품 상세 페이지
      */
     @GetMapping("/detailPage/{productKey}")
     public String detailPage(@PathVariable("productKey") Integer productKey, Model model) {
@@ -58,7 +59,7 @@ public class ProductController {
     }
 
     /**
-     * 상품 수정페이지
+     * 상품 수정 페이지
      */
     @GetMapping("/editPage/{productKey}")
     public String editPage(@PathVariable("productKey") Integer productKey, Model model) {
@@ -77,7 +78,7 @@ public class ProductController {
         model.addAttribute("product", updatedProduct);
         return "admin/product/detail.html";
     }
-
+//
 //    /**
 //     * 상품 삭제
 //     */

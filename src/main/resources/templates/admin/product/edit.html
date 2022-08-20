@@ -1,45 +1,131 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <title>Product Details</title>
 </head>
 <body>
 
 <form th:action="@{'/admin/product/edit/' + ${product.productKey}}" method="post">
-    <input type="hidden" th:value="${product.productKey}">
+    <input id="productKey" type="hidden" th:value="${product.productKey}">
     <div>
         <div>
-            <p class="label-txt"><b>productName</b></p>
-            <input type="text" name="productName" th:value="${product.productName}" size=40>
+            <p class="label-txt">
+                <label for="productName"></label><b>productName</b>
+            </p>
+            <input type="text" id="productName" name="productName" th:value="${product.productName}" size=40>
         </div>
         <div>
-            <p class="label-txt"><b>Description</b></p>
-            <textarea type="text" name="description" th:value="${product.description}" th:text="${product.description}" cols=40 rows=10></textarea>
+            <p class="label-txt">
+                <label for="description"></label<b>Description</b>
+            </p>
+            <label for="description"></label><textarea type="text" id="description" name="description" th:value="${product.description}"
+                                                       th:text="${product.description}" cols=40 rows=10></textarea>
         </div>
         <div>
-            <p class="label-txt"><b>Price</b></p>
-            <input type="text" name="price" th:value="${product.price}">
+            <p class="label-txt">
+                <label for="price"></label><b>Price</b>
+            </p>
+            <input type="text" id="price" name="price" th:value="${product.price}">
         </div>
         <div>
-            <p class="label-txt"><b>Brand</b></p>
-            <input type="text" name="brand" th:value="${product.brand}">
+            <p class="label-txt">
+                <label for="brand"><b>Brand</b></label>
+            </p>
+            <input type="text" id="brand" name="brand" th:value="${product.brand}">
         </div>
         <div>
-            <p class="label-txt"><b>Color</b></p>
-            <input type="text" name="color" th:value="${product.color}">
+            <p class="label-txt">
+                <label for="color"></label><b>Color</b>
+            </p>
+            <input type="text" id="color" name="color" th:value="${product.color}">
         </div>
         <div>
-            <p class="label-txt"><b>Stock</b></p>
-            <input type="text" name="stock" th:value="${product.stock}">
+            <p class="label-txt">
+                <label for="stock"></label><b>Stock</b>
+            </p>
+            <input type="text" id="stock" name="stock" th:value="${product.stock}">
         </div>
     </div>
     <div>
-        <button th:onclick="location.href='/admin/product/remove/[[${product.productKey}]]'">Delete</button>
-        <button type="submit">Edit</button>
-        <button th:onclick="'location.href=\''+ @{/admin/product/listPage} + '\''">List</button>
+        <button type="button" onclick="removeProduct()">Delete</button>
+        <!--        <button type="submit">Edit</button>-->
+        <button type="button" id="edit_btn" onclick="editProduct()">Edit</button>
+        <button th:onclick="'location.href=\''+ '@{/admin/product/listPage} + '\''">List</button>
     </div>
 </form>
 
 </body>
+<script>
+
+    const key = window.location.pathname.split("/").pop()
+
+    function editProduct() {
+        console.log(111);
+        const confirmAlert = confirm('Are you sure you want to perform the following update?');
+
+        const productKey = document.getElementById("productKey").value;
+        const productName = document.getElementById("productName").value;
+        const description = document.getElementById("description").value;
+        const price = document.getElementById("price").value;
+        const brand = document.getElementById("brand").value;
+        const color = document.getElementById("color").value;
+        const stock = document.getElementById("stock").value;
+
+        const dataList = {
+            "productKey": productKey,
+            "productName": productName,
+            "description": description,
+            "price": price,
+            "brand": brand,
+            "color": color,
+            "stock": stock
+        };
+        console.log(dataList);
+
+        if (confirmAlert) {
+            $.ajax({
+                type: 'PUT'
+                , url: '/product/' + productKey
+                , dataType: 'json'
+                , data: JSON.stringify(dataList)
+                , contentType: 'application/json'
+                , success: function () {
+
+                    alert('The update was successful.');
+                    location.href = '/product/detailPage/' + productKey;
+                },
+                error: function (request, status, error) {
+
+                }
+            })
+        }
+    }
+
+    function removeProduct() {
+
+        const productKeyArray = [];
+        productKeyArray.push(key);
+
+        const confirmAlert = confirm('Are you sure you want to permanently remove this item?');
+
+        if (confirmAlert) {
+
+            $.ajax({
+                type: 'DELETE'
+                , url: '/product'
+                , dataType: 'json'
+                , data: JSON.stringify(productKeyArray)
+                , contentType: 'application/json'
+                , success: function () {
+                    alert('Item has been deleted.');
+                    location.href = "/product/listPage";
+                },
+            })
+
+        }
+    }
+
+</script>
 </html>

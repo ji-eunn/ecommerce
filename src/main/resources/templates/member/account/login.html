@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -18,18 +18,18 @@
     <button type="submit" id="login_btn">Login</button>
 </form>
 </body>
-<script type="text/javascript">
+<script>
     $(document).ready(function(){
         $("#login_btn").click(function({
               const email = $("#email").val();
               const password = $("password").val();
 
-              if(email == "") {
+              if(email === "") {
                 alert("Please enter a valid email address.");
                 $("#email").focus();
                 return;
               }
-              if(password == "") {
+              if(password === "") {
                   alert("Please enter password.");
                   $("#email").focus();
                   return;

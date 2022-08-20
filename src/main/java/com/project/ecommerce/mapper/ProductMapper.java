@@ -17,7 +17,7 @@ public interface ProductMapper {
 
     void updateProduct(ProductDto productDto);
 
-    void deleteProduct(Integer productKey);
+    void deleteProduct(List<Integer> productKeyArray);
 
     List<CategoryDto> selectCategory();
 

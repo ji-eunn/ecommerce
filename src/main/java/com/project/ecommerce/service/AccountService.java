@@ -3,47 +3,47 @@ package com.project.ecommerce.service;
 import com.project.ecommerce.config.Sha256;
 import com.project.ecommerce.dto.AccountDto;
 import com.project.ecommerce.mapper.AccountMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
 
-    @Autowired
-    AccountMapper accountMapper;
+    private final AccountMapper accountMapper;
 
     public int join(AccountDto memberDto) {
-
 
         memberDto.setPassword(Sha256.encrypt(memberDto.getPassword()));
 
         if (confirmEmail(memberDto.getEmail())) {
             return 0;
         }
-
         accountMapper.createMember(memberDto);
         return 1;
 
     }
+/*
 
-//    public void login(MemberDto memberDto) {
-//        MemberDto data = accountMapper.checkMember(memberDto);
-//
-//        if(data != null) {
-//            memberDto.setMemberKey(data.getMemberKey());
-//            memberDto.setMemberName(data.getMemberName());
-//            memberDto.setEmail(data.getEmail());
-//            memberDto.setPassword(data.getPassword());
-//            memberDto.setPassword("");
-//            memberDto.setLoginTime(data.getLoginTime());
-//            memberDto.setCreateTime(data.getCreateTime());
-//        } else {
-//            memberDto.setMemberKey(-1);
-//            memberDto.setPassword("");
-//        }
-//    }
+    public void login(MemberDto memberDto) {
+        MemberDto data = accountMapper.checkMember(memberDto);
+
+        if(data != null) {
+            memberDto.setMemberKey(data.getMemberKey());
+            memberDto.setMemberName(data.getMemberName());
+            memberDto.setEmail(data.getEmail());
+            memberDto.setPassword(data.getPassword());
+            memberDto.setPassword("");
+            memberDto.setLoginTime(data.getLoginTime());
+            memberDto.setCreateTime(data.getCreateTime());
+        } else {
+            memberDto.setMemberKey(-1);
+            memberDto.setPassword("");
+        }
+    }
+*/
 
     public AccountDto searchByKey(Integer memberKey) {
         return accountMapper.selectMemberByKey(memberKey);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <title>Sign Up</title>
 </head>
@@ -63,8 +63,8 @@
         if (email === "" || email === undefined) {
             // 이메일이 값이 있는지 검사
             alert("Please enter your email."); // 값이 없으면 alert 창 발생
-            email.focus(); // 해당 html 포커싱하고
-            return; // 로직 종료
+            email.focus();                     // 해당 html 포커싱하고
+            return;                            // 로직 종료
         }
         $.ajax({
             url: "/member/email",
@@ -74,7 +74,7 @@
                 email: document.getElementById("email").value
             },
             success: function (data) {
-                if (data.result == false) {
+                if (data.result === false) {
                     document.getElementById('confirm_email_res').style.color = "green";
                     document.getElementById('confirm_email_res').innerText = "Available";
                 } else {
@@ -110,7 +110,6 @@
         const phone = document.getElementById("phone");
         let a = phone.value.replaceAll("-","");
 
-        // phone.value = phone.value.replaceAll("-","");
         $('#phone').val(phone.value.replaceAll("-",""));
 
 
@@ -136,16 +135,11 @@
                 if (data === 1) {
                     alert("회원가입이 완료되었습니다.");
                     location.href="/member/account/login.html";
-                    // document.getElementById("phone").value = data.phone;
                 } else {
                     alert("회원가입이 실패하였습니다.");
                 }
             }
         });
-
-
-
-
         alert("Your account has been created successfully.");
 
     }

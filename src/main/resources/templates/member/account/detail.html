@@ -1,32 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <title>Member Account</title>
 </head>
 <body>
-<!--    <input type="hidden" value="${account.memberKey}">
-    <label for="memberName">
-        <p class="label-txt"><b>Name</b></p>
-        <input type="text" id="memberName" th:value="${account.memberName}" class="input" name="memberName" disabled>
-    </label>
-    <label for="email">
-        <p class="label-txt"><b>Email</b></p>
-        <input type="text" id="email" th:value="${account.email}" class="input" name="email" disabled>
-    </label>
-    <label for="password">
-        <p class="label-txt"><b>Password</b></p>
-        <input type="password" id="password" th:value="${account.password}" class="input" name="password" disabled>
-    </label>
-    <label for="phone">
-        <p class="label-txt"><b>Phone</b></p>
-        <input type="text" id="phone" th:value="${account.phone}" class="input" name="phone" disabled>
-    </label>
-    <div>
-        <button th:onclick="removeAccount('[[${account.memberKey}]]')">Delete</button>
-        <button th:onclick="location.href='/account/editPage/[[${account.memberKey}]]'">Edit</button>
-    </div>-->
     <div>
         <label for="memberName">
             <p class="label-txt"><b>Name</b></p>
@@ -57,23 +36,32 @@
 
     $.ajax({
         type : 'GET'
-        ,url : '/member/' + key  // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
+        ,url : '/member/' + key
         ,dataType : 'json'
-        ,data : JSON.stringify()
         ,contentType : 'application/json'
         ,success : function(result) {
             document.getElementById("memberName").value = result.memberName;
             document.getElementById("email").value = result.email;
             document.getElementById("password").value = result.password;
             document.getElementById("phone").value = result.phone;
-            $('#button').append(" <button onclick=\"removeAccount(result.memberKey)\">Delete</button>\n" +
-                "<button onclick=\"location.href='/member/" + result.memberKey + "'\">Edit</button>")
-        },
-        error : function(request, status, error) {
-
+            $('#button').append(" <button onclick=\"removeAccount()\">Delete</button>\n" +
+                "<button onclick=\"location.href='/account/editPage/" + result.memberKey + "'\">Edit</button>")
         }
-
     })
 
+    function removeAccount() {
+
+        $.ajax({
+            type : 'DELETE'
+            ,url : '/member/' + key // key 전역변수로 선언했기 때문에 removeAccount 에서도 사용 가능
+            ,dataType : 'json'
+            ,contentType : 'application/json'
+            ,success : function(result) {
+                console.log(result)
+                location.href = '/account/listPage';
+            }
+        })
+
+    }
 </script>
 </html>

@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
     <title>Category Details</title>
 </head>
 <body>
-<!-- disabled로 분리 -->
 <h2 class="label-txt"><b>Category Details</b></h2>
 <input type="hidden" th:value="${category.categoryKey}">
 <div>
     <div>
+        <label for="categoryKey"></label>
         <select id="categoryKey" name="categoryKey">
             <option>Select a category</option>
             <option th:value="${category.upperKey}"></option>
         </select>
     </div>
     <div>
-        <label>categoryName</label>
-        <input th:value="${category.categoryName}" disabled>
+        <label>
+            <input th:value="${category.categoryName}" disabled>
+        </label>
     </div>
 </div>
 <div>

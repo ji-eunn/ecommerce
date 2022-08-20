@@ -9,43 +9,61 @@
     </insert>
 
     <select id="selectProduct" resultType="productDto">
-        SELECT PRODUCT_KEY, PRODUCT_NAME, PRICE, CATEGORY, DESCRIPTION, BRAND, COLOR, STOCK
-          FROM PRODUCT
-         WHERE DEL_FLAG = 0
+        SELECT PRODUCT_KEY,
+               PRODUCT_NAME,
+               PRICE,
+               CATEGORY,
+               DESCRIPTION,
+               BRAND,
+               COLOR,
+               STOCK
+        FROM PRODUCT
+        WHERE DEL_FLAG = 0
     </select>
 
     <select id="selectProductByKey" resultType="productDto">
-        SELECT PRODUCT_KEY, PRODUCT_NAME, PRICE, CATEGORY, DESCRIPTION, BRAND, COLOR, STOCK
-          FROM PRODUCT
-         WHERE PRODUCT_KEY = #{productKey}
+        SELECT PRODUCT_KEY,
+               PRODUCT_NAME,
+               PRICE,
+               CATEGORY,
+               DESCRIPTION,
+               BRAND,
+               COLOR,
+               STOCK
+        FROM PRODUCT
+        WHERE PRODUCT_KEY = #{productKey}
     </select>
 
     <update id="updateProduct" parameterType="productDto">
         UPDATE PRODUCT
-           SET PRODUCT_NAME = #{productName},
-               PRICE = #{price},
-               DESCRIPTION = #{description},
-               BRAND = #{brand},
-               COLOR = #{color},
-               STOCK = #{stock}
-         WHERE PRODUCT_KEY = #{productKey}
+        SET PRODUCT_NAME = #{productName},
+            PRICE        = #{price},
+            DESCRIPTION  = #{description},
+            BRAND        = #{brand},
+            COLOR        = #{color},
+            STOCK        = #{stock}
+        WHERE PRODUCT_KEY = #{productKey}
     </update>
 
-    <update id="deleteProduct" parameterType="productDto">
+    <update id="deleteProduct">
         UPDATE PRODUCT
-           SET DEL_FLAG = 1
-         WHERE PRODUCT_KEY = #{productKey}
+        SET DEL_FLAG = 1
+        WHERE PRODUCT_KEY IN (
+        <foreach collection="productKeyArray" item="productKey" index="key" separator=",">
+            #{productKey}
+        </foreach>
+        )
     </update>
 
     <select id="selectCategory" resultType="categoryDto">
         SELECT CATEGORY_KEY, CATEGORY_NAME
-          FROM CATEGORY
+        FROM CATEGORY
     </select>
 
     <update id="deleteCheckedProduct" parameterType="productDto">
         UPDATE PRODUCT
-           SET DEL_FLAG = 1
-         WHERE PRODUCT_KEY = #{productKey}
+        SET DEL_FLAG = 1
+        WHERE PRODUCT_KEY = #{productKey}
     </update>
 
 </mapper>
