@@ -28,6 +28,9 @@
     </tr>
     </tbody>
 </table>
+<div id="buttons">
+
+</div>
 </body>
 
 <script>
@@ -46,15 +49,16 @@
                     "           </label>\n" +
                     "        </td>" +
                     "        <td>" + result[i].productKey + "</td>\n" +
-                    "        <td><a href='/product/editPage/" + result[i].productKey + "'>" + result[i].productName + "</a></td>\n" +
+                    "        <td><a href='/product/detailPage/" + result[i].productKey + "'>" + result[i].productName + "</a></td>\n" +
                     "        <td>" + result[i].brand + "</td>\n" +
                     "        <td>" + result[i].price + "</td>" +
                     "        <td>" + result[i].stock + "</td>" +
-                    "        <td><button onclick=\"location.href='/product/editPage/" + result[i].productKey + "'\">Edit</button></td>\n" +
-                    "        <td><button onclick='removeProduct()'>Delete</button></td>" +
                     "</tr>")
-
             }
+            $('#buttons').append(
+                "        <button onclick=\"location.href='/product/registerPage'\">Register</button>\n" +
+                "        <button onclick='removeProduct()'>Delete</button>"
+            )
         }
     })
 
@@ -108,8 +112,8 @@
         if (confirmAlert) {
 
             $.ajax({
-                type: 'POST'
-                , url: 'checked/remove' // url 앞에 / 를 붙이면 그때그때마다 다르나 localhost:8080/ 에서 바로 시작되는 느낌?
+                type: 'DELETE'
+                , url: '/product'
                 , dataType: 'json'
                 , data: JSON.stringify(productKeyArray)
                 , contentType: 'application/json'
