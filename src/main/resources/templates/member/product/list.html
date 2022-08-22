@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <title>Product List</title>
+</head>
+<body>
+<h2 class="label-txt"><b>Product List</b></h2>
+<table id="table">
+    <thead>
+    <tr>
+        <th>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="allCheckBox" class="chk" th:onclick="allChecked(this)">
+            </label>
+        </th>
+        <th>No</th>
+        <th>Product Name</th>
+        <th>Brand</th>
+        <th>Price</th>
+        <th>Stock</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="products">
+
+    </tr>
+    </tbody>
+</table>
+<div id="buttons">
+
+</div>
+</body>
+
+<script>
+    $.ajax({
+        type: 'GET'
+        , url: '/product'
+        , dataType: 'json'
+        , contentType: '/application/json'
+        , success: function (result) {
+            for (let i = 0; i < result.length; i++) {
+                $('#table').append(
+                    " <tr> " +
+                    "        <td>\n" +
+                    "           <label class=\"checkbox-inline\">\n" +
+                    "               <input type=\"checkbox\" class=\"chk\" name=\"cchk\" onclick='cchkClicked()' value=" + result[i].productKey + ">\n" +
+                    "           </label>\n" +
+                    "        </td>" +
+                    "        <td>" + result[i].productKey + "</td>\n" +
+                    "        <td><a href='/product/detailPage/" + result[i].productKey + "'>" + result[i].productName + "</a></td>\n" +
+                    "        <td>" + result[i].brand + "</td>\n" +
+                    "        <td>" + result[i].price + "</td>" +
+                    "        <td>" + result[i].stock + "</td>" +
+                    "</tr>")
+            }
+        }
+    })
+
+
+</script>
+</html>
