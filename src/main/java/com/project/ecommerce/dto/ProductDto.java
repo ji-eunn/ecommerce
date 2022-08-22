@@ -3,6 +3,7 @@ package com.project.ecommerce.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
@@ -17,6 +18,6 @@ public class ProductDto {
     private String brand;
     private String color;
     private Integer stock;
-    private Date regTime;
+    private Timestamp regTime;
 
 }
