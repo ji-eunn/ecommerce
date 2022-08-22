@@ -60,10 +60,4 @@
         FROM CATEGORY
     </select>
 
-    <update id="deleteCheckedProduct" parameterType="productDto">
-        UPDATE PRODUCT
-        SET DEL_FLAG = 1
-        WHERE PRODUCT_KEY = #{productKey}
-    </update>
-
 </mapper>

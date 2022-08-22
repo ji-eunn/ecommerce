@@ -42,21 +42,4 @@ public class ProductService {
         return productMapper.selectCategory();
     }
 
-    public void checkedRemove(List<Integer> productKeyArray) {
-        /*
-            for(int j = 0; j < productKeyArray.size(); j++) {
-            // productKey   2 4 6 7
-            // i            0 1 2 3
-
-                productMapper.deleteCheckedProduct(productKeyArray.get(j));
-            }
-        */
-
-        // productKeyArray.get(i) -> productKey
-        // Integer 인 이유는 List<Integer> productKeyArray 로 데이터타입을 Integer 로 선언해주었기 때문
-        for (Integer productKey : productKeyArray) {
-            productMapper.deleteCheckedProduct(productKey);
-        }
-
-    }
 }

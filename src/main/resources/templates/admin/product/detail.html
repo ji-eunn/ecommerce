@@ -72,8 +72,8 @@ function removeProduct(productKey) {
     if(confirmAlert) {
 
         $.ajax({
-            type : 'POST'
-            ,url : '/product/'
+            type : 'DELETE'
+            ,url : '/product'
             ,dataType : 'json'
             ,data : JSON.stringify(productKeyArray)
             ,contentType : 'application/json'

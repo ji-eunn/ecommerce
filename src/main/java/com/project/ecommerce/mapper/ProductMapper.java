@@ -20,6 +20,4 @@ public interface ProductMapper {
     void deleteProduct(List<Integer> productKeyArray);
 
     List<CategoryDto> selectCategory();
-
-    int deleteCheckedProduct(Integer productKey);
 }
