@@ -23,5 +23,6 @@ public class CartService {
     }
 
     public void checkedRemove(List<Integer> productKeyArray) {
+        cartMapper.checkedRemove(productKeyArray);
     }
 }

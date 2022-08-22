@@ -19,7 +19,10 @@
     <update id="checkedRemove" parameterType="cartDto">
         UPDATE CART
            SET DEL_FLAG = 1
-         WHERE PRODUCT_KEY = #{productKey}
+         WHERE PRODUCT_KEY IN (
+             <foreach collection="productKeyArray" item="productKey" index="key" separator=",">
+                #{productKey}
+            </foreach>)
     </update>
 
 </mapper>
