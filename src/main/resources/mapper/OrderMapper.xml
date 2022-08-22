@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mybatis 의 경우, API -> DB 부터 작업 -->
+<mapper namespace="com.project.ecommerce.mapper.OrderMapper">
+    <insert id="insert" parameterType="OrderDto">
+        INSERT INTO ORDERS (RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, MEMBER_KEY, REQUIREMENT, TOTAL_PRICE)
+        VALUES (#{receiverName}, #{receiverAddress}, #{receiverPhone}, #{memberKey}, #{requirement}, #{totalPrice})
+    </insert>
+
+    <!--order_key -->
+</mapper>
