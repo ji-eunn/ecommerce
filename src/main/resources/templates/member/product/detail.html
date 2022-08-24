@@ -28,13 +28,9 @@
         <p class="label-txt"><b>Color</b></p>
         <input type="text" id="color" disabled>
     </label>
-    <label for="stock">
-        <p class="label-txt"><b>Stock</b></p>
-        <input type="text" id="stock" disabled>
-    </label>
 </div>
 <div>
-    <button th:onclick="removeProduct('[[${product.productKey}]]')">Add to Cart</button>
+    <button th:onclick="addCart('[[${product.productKey}]]')">Add to Cart</button>
     <button th:onclick="location.href='/admin/product/editPage/[[${product.productKey}]]'">Buy</button>
 </div>
 
@@ -52,7 +48,6 @@
             document.getElementById("price").value = result.price;
             document.getElementById("brand").value = result.brand;
             document.getElementById("color").value = result.color;
-            document.getElementById("stock").value = result.stock;
             $('#button').append(" <button onclick=\"removeAccount(result.memberKey)\">Delete</button>\n" +
                 "<button onclick=\"location.href='/member/" + result.memberKey + "'\">Edit</button>")
         },
