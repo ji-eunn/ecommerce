@@ -35,8 +35,8 @@
 </div>
 <div>
     <button th:onclick="removeProduct('[[${product.productKey}]]')">Delete</button>
-    <button th:onclick="location.href='/admin/product/editPage/[[${product.productKey}]]'">Edit</button>
-    <button th:onclick="'location.href=\''+ @{/admin/product/listPage} + '\''">List</button>
+    <button th:onclick="location.href='/product/editPage/[[${product.productKey}]]'">Edit</button>
+    <button th:onclick="'location.href=\''+ @{/product/listPage} + '\''">List</button>
 </div>
 
 <script>
@@ -54,8 +54,6 @@
             document.getElementById("brand").value = result.brand;
             document.getElementById("color").value = result.color;
             document.getElementById("stock").value = result.stock;
-            $('#button').append(" <button onclick=\"removeAccount(result.memberKey)\">Delete</button>\n" +
-                "<button onclick=\"location.href='/member/" + result.memberKey + "'\">Edit</button>")
         },
         error : function(request, status, error) {
 
