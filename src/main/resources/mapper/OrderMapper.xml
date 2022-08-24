@@ -8,5 +8,34 @@
         VALUES (#{receiverName}, #{receiverAddress}, #{receiverPhone}, #{memberKey}, #{requirement}, #{totalPrice})
     </insert>
 
-    <!--order_key -->
+    <select id="selectOrderByKey" resultType="OrderDto">
+        SELECT ORDER_KEY,
+               RECEIVER_NAME,
+               RECEIVER_ADDRESS,
+               RECEIVER_PHONE,
+               MEMBER_KEY,
+               REQUIREMENT,
+               TOTAL_PRICE
+          FROM ORDERS
+         WHERE ORDER_KEY = #{orderKey}
+    </select>
+
+    <update id="updateOrder" parameterType="orderDto">
+        UPDATE ORDERS
+           SET RECEIVER_NAME = #{receiverName},
+               RECEIVER_ADDRESS = #{receiverAddress},
+               RECEIVER_PHONE = #{receiverPhone}
+         WHERE ORDER_KEY = #{orderKey}
+    </update>
+
+    <update id="deleteOrder">
+        UPDATE ORDERS
+           SET DEL_FLAG = 1
+         WHERE ORDER_KEY IN (
+         <foreach collection="orderKeyArray" item="orderKey" index="key" separator=",">
+             #{orderKey}
+         </foreach>
+         )
+    </update>
+
 </mapper>
