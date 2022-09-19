@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.ecommerce.mapper.QnaMapper">
+
+    <insert id="insertQna" parameterType="qnaDto">
+        INSERT INTO QNA (QNA_TITLE, QNA_PWD, QNA_WRITER, QNA_CONTENT, QNA_CATEGORY, LOCK_FLAG)
+        VALUES (#{qnaTitle}, #{qnaPwd}, #{qnaWriter}, #{qnaContent}, #{qnaCategory}, #{lockFlag})
+    </insert>
+
+    <select id="selectQna" resultType="qnaDto">
+        SELECT QNA_KEY,
+               QNA_TITLE,
+               QNA_PWD,
+               QNA_WRITER,
+               QNA_CONTENT,
+               QNA_CATEGORY,
+               QNA_TIME,
+               LOCK_FLAG
+        FROM QNA
+        WHERE DEL_FLAG = 0
+    </select>
+
+    <select id="selectQnaByKey" resultType="qnaDto">
+        SELECT QNA_KEY,
+               QNA_TITLE,
+               QNA_PWD,
+               QNA_WRITER,
+               QNA_CONTENT,
+               QNA_CATEGORY,
+               QNA_TIME,
+               LOCK_FLAG
+        FROM QNA
+        WHERE QNA_KEY = #{qnaKey}
+    </select>
+
+    <update id="updateQna" parameterType="qnaDto">
+        UPDATE QNA
+        SET  QNA_TITLE = #{qnaTitle},
+           QNA_PWD = #{qnaPwd},
+           QNA_WRITER = #{qnaWriter},
+           QNA_CONTENT= #{qnaContent},
+           QNA_CATEGORY = #{qnaCategory},
+           QNA_TIME = #{qnaTime},
+           LOCK_FLAG = #{lockFlag}
+        WHERE QNA_KEY = #{qnaKey}
+    </update>
+
+    <update id="deleteQna">
+        UPDATE QNA
+        SET DEL_FLAG = 1
+        WHERE QNA_KEY IN (
+        <foreach collection="qnaKeyArray" item="qnaKey" index="key" separator=",">
+            #{qnaKey}
+        </foreach>
+        )
+    </update>
+
+    <!-- qna_category(예 - 배송문의, 상품문의 등) 은 DB로 관리할만큼 유동적이지는 않기 때문에
+    서버에서 갖고 있어도 될 것. 서버에서 그때그때마다 표현 (String 에 담아놓고 뿌려주면 된다) -->
+
+</mapper>
