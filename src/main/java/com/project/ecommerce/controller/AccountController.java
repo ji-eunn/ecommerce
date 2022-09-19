@@ -27,7 +27,7 @@ public class AccountController {
     }
 
     /**
-     * 회원 등록
+     * 회원 가입
      */
     @PostMapping("/join")
     public String joinLogic(AccountDto memberDto, Model model) {
@@ -74,12 +74,12 @@ public class AccountController {
     /**
      * 회원 탈퇴
      */
-    @PostMapping("/remove")
+/*    @PostMapping("/remove")
     @ResponseBody
     public Integer remove(@RequestBody Integer memberKey) {
         accountService.remove(memberKey);
         return memberKey;
-    }
+    }*/
 
     /**
      * 회원 목록 페이지

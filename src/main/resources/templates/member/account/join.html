@@ -28,6 +28,7 @@
         const correctColor = "green";
         const incorrectColor = "red";
 
+        // 유효성은 기능이 다 완성되고 넣어주는 게 좋다. 테스트 할 때 방해가 되기 떄문
         if(!/^[a-zA-Z0-9]{6,20}$/.test(password.value)) {
             alert ('Password must be 6-20 characters and contain both numbers and letters characters.')
             password.value="";
@@ -119,29 +120,31 @@
             // true
         }
 
+        const data = {
+            email: document.getElementById("email").value,
+                memberName: document.getElementById("memberName").value,
+                password: document.getElementById("password").value,
+                phone: document.getElementById("phone").value
+        }
+        console.log(data);
+
         // document.getElementById('join_form').submit();
         // ajax 로직 추가
         $.ajax({
             url: "/member",
             type: "post",
             datatype: "json",
-            data: {
-                email: document.getElementById("email").value,
-                memberName: document.getElementById("memberName").value,
-                password: document.getElementById("password").value,
-                phone: document.getElementById("phone").value
-            },
+            contentType : "application/json",
+            data: JSON.stringify(data),
             success: function (data) {
                 if (data === 1) {
-                    alert("회원가입이 완료되었습니다.");
-                    location.href="/member/account/login.html";
+                    alert("Your account has been created successfully.");
+                    location.href='/account/loginPage';
                 } else {
                     alert("회원가입이 실패하였습니다.");
                 }
             }
         });
-        alert("Your account has been created successfully.");
-
     }
 
 </script>

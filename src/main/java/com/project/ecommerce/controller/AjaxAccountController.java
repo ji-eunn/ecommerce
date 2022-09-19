@@ -34,6 +34,10 @@ public class AjaxAccountController {
      */
     @PostMapping
     public Integer joinLogic(@RequestBody AccountDto accountDto, Model model) { // @RequestBody <- data : JSON.stringify() 으로 받는 건 @RequestBody 어노테이션 사용해줘야 함
+        System.out.println(111);
+//        AccountDto accountDto1 = new AccountDto();
+//        accountDto1.setEmail(null);
+//        accountDto1.getEmail();
         if (accountService.join(accountDto) == 0) {
             model.addAttribute("error", 1);
             return 0;
@@ -67,11 +71,12 @@ public class AjaxAccountController {
         return accountService.edit(accountDto);
     }
 
+
     /* 회원 삭제 */
-    @DeleteMapping("/{memberKey}")
-    public Integer removeLogic(@PathVariable("memberKey") Integer memberKey) {
-        accountService.remove(memberKey);
-        return memberKey;
+    @DeleteMapping
+    public Integer removeLogic(@RequestBody List<Integer> memberKeyArray) {
+        accountService.remove(memberKeyArray);
+        return 1;
     }
 
 

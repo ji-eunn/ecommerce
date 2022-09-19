@@ -31,10 +31,13 @@
          WHERE MEMBER_KEY = #{memberKey}
     </update>
 
-    <update id="deleteAccount" parameterType="Integer">
+    <update id="deleteAccount">
         UPDATE MEMBER
            SET DEL_FLAG = 1
-         WHERE MEMBER_KEY = #{memberKey}
+         WHERE MEMBER_KEY IN (
+        <foreach collection="memberKeyArray" item="memberKey" index="key" separator=",">
+            #{memberKey}
+        </foreach>
     </update>
 
     <select id="selectMember" resultType="accountDto">

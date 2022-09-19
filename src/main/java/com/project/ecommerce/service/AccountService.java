@@ -54,8 +54,8 @@ public class AccountService {
         return searchByKey(accountDto.getMemberKey());
     }
 
-    public void remove(Integer memberKey) {
-        accountMapper.deleteAccount(memberKey);
+    public void remove(List<Integer> memberKeyArray) {
+        accountMapper.deleteAccount(memberKeyArray);
     }
 
     public List<AccountDto> search() {

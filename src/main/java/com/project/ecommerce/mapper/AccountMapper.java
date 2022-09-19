@@ -14,7 +14,7 @@ public interface AccountMapper {
 
     void updateAccount(AccountDto accountDto);
 
-    void deleteAccount(@Param("memberKey") Integer memberKey);
+    void deleteAccount(List<Integer> memberKeyArray);
 
     List<AccountDto> selectMember();
 

@@ -40,7 +40,7 @@
                     "        <td>" + result[i].email + "</td>\n" +
                     "        <td>" + result[i].phone + "</td>" +
                     " <td><button onclick=\"location.href='/account/editPage/"+result[i].memberKey+"'\">Edit</button></td>\n" +
-                    "<td><button onclick=\"location.href='/member/"+result[i].memberKey+"'\">Delete</button></td>" +
+                    "<td><button onclick=\"removeProduct(" + result[i].memberKey + ")\">Delete</button></td>" +
                     "</tr>")
 
 
@@ -49,35 +49,28 @@
         }
     })
 
-    function removeAccount() {
-        // 변수 선언 시, var 지양!! let, const 사용
-        const productKeyArray = []; // js 에서는 배열처럼 생겼으나 리스트처럼 쓰인다. 즉, 크기가 정해져 있지 않다
-        $("input:checkbox[name=cchk]:checked").each(function () {
-            console.log($(this))
-            productKeyArray.push($(this).val());
-        })
+    function removeProduct(memberKey) {
+        // var productKeyArray = $(".deleteBtn").data("productKey");
+        const memberKeyArray = [];
+        memberKeyArray.push(memberKey);
 
-        if (productKeyArray === "") {
-            alert("Please select one record to be deleted.");
-            return false;
-        }
+        const confirmAlert = confirm('Are you sure you want to permanently remove this account?');
 
-        const confirmAlert = confirm('Are you sure you want to permanently remove this item?');
-
-        if (confirmAlert) {
+        // jQuery 사용 지양!! 왜? 무겁고 느림
+        if(confirmAlert) {
 
             $.ajax({
-                type: 'DELETE'
-                , url: '/product'
-                , dataType: 'json'
-                , data: JSON.stringify(productKeyArray)
-                , contentType: 'application/json'
-                , success: function () {
-                    alert('Item has been deleted.');
-                    location.reload();
+                type : 'DELETE'
+                ,url : '/account'
+                ,dataType : 'json'
+                ,data : JSON.stringify(memberKeyArray)
+                ,contentType : 'application/json'
+                ,success : function() {
+                    alert('Account has been deleted.');
+                    location.href="/account/listPage";
                 },
-                error: function (request, status, error) {
-
+                error : function(request, status) {
+                    alert(status + " 에러가 발생했습니다. \r 관리자에게 문의 주십시오 .")
                 }
             })
         }
