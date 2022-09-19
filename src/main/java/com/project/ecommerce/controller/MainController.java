@@ -19,7 +19,7 @@ public class MainController {
 
     @GetMapping("/")
     public String indexPage() {
-        return "main.html";
+        return "cart.html";
     }
 
     @GetMapping("/admin")
