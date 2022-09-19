@@ -28,6 +28,10 @@
         <p class="label-txt"><b>Color</b></p>
         <input type="text" id="color" disabled>
     </label>
+    <label for="quantity">
+        <p class="label-txt"><b>Quantity</b></p>
+        <input type="text" id="quantity">
+    </label>
 </div>
 <div>
     <button th:onclick="addCart('[[${product.productKey}]]')">Add to Cart</button>

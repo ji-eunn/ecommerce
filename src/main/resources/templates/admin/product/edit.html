@@ -52,7 +52,7 @@
         <button type="button" onclick="removeProduct()">Delete</button>
         <!--        <button type="submit">Edit</button>-->
         <button type="button" id="edit_btn" onclick="editProduct()">Edit</button>
-        <button th:onclick="'location.href=\''+ '@{/admin/product/listPage} + '\''">List</button>
+        <button th:onclick="'location.href=\''+ @{/product/listPage} + '\''">List</button>
     </div>
 </form>
 

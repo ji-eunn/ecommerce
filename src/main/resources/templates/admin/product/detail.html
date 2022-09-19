@@ -66,7 +66,7 @@ function removeProduct(productKey) {
 
     const confirmAlert = confirm('Are you sure you want to permanently remove this item?');
 
-    // jQuery 사용 지양!! 왜? 무겁고 느림
+    // jQuery 사용 지양!! 왜? 무겁고 느림"'location.href=\''+ '@{/admin/product/listPage} + '\''"
     if(confirmAlert) {
 
         $.ajax({

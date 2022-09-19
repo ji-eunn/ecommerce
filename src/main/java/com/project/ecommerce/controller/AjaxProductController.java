@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/product")
+@RequestMapping(value="/product", produces ="application/json")
 @RequiredArgsConstructor
 public class AjaxProductController {
 
@@ -47,7 +47,7 @@ public class AjaxProductController {
     /**
      * 상품 삭제
      */
-    @DeleteMapping()
+    @DeleteMapping
     public Integer removeLogic(@RequestBody List<Integer> productKeyArray) {
         productService.remove(productKeyArray);
         return 1;
